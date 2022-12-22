@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_management/domain/categories/repositories/repository.dart';
 import 'package:money_management/domain/categories/use_case.dart';
-import 'package:money_management/models/category_model.dart';
+import 'package:money_management/domain/categories/entities/category_model.dart';
 
 part 'category_event.dart';
 part 'category_state.dart';

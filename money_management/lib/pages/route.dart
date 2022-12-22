@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:money_management/pages/home/home_screen.dart';
+part of 'route_export.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -7,6 +6,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       // final map = settings.arguments as Map;
       return MaterialPageRoute(
           builder: (context) => const HomeScreen(), settings: settings);
+    case CategoryScreen.routeName:
+      // final map = settings.arguments as Map;
+      return MaterialPageRoute(
+          builder: (context) => const CategoryScreen(), settings: settings);
+    case CategoryInputScreen.routeName:
+      // final map = settings.arguments as Map;
+      return MaterialPageRoute(
+          builder: (context) => const CategoryInputScreen(),
+          settings: settings);
     default:
       return MaterialPageRoute(
           builder: (context) => const HomeScreen(), settings: settings);

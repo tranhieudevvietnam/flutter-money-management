@@ -15,9 +15,14 @@ class _InputScreenState extends State<InputScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
+  ValueNotifier<int> tabCurrentIndex = ValueNotifier<int>(0);
+
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      tabCurrentIndex.value = _tabController.index;
+    });
     super.initState();
   }
 
@@ -49,25 +54,31 @@ class _InputScreenState extends State<InputScreen>
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: TabBar(
-                  controller: _tabController,
-                  // give the indicator a decoration (color and border radius)
-                  indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      25.0,
-                    ),
-                    color: ColorConst.primary,
-                  ),
-                  labelColor: Colors.white,
-                  unselectedLabelColor: Colors.black,
-                  tabs: const [
-                    Tab(
-                      text: 'Pay',
-                    ),
-                    Tab(
-                      text: 'Collect',
-                    ),
-                  ],
+                child: ValueListenableBuilder(
+                  valueListenable: tabCurrentIndex,
+                  builder: (context, value, child) {
+                    return TabBar(
+                      controller: _tabController,
+                      // give the indicator a decoration (color and border radius)
+                      indicator: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          25.0,
+                        ),
+                        color:
+                            value == 0 ? ColorConst.error : ColorConst.success,
+                      ),
+                      labelColor: Colors.white,
+                      unselectedLabelColor: Colors.black,
+                      tabs: const [
+                        Tab(
+                          text: 'Pay',
+                        ),
+                        Tab(
+                          text: 'Collect',
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),

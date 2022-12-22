@@ -1,4 +1,4 @@
-import 'package:money_management/models/money_model.dart';
+import 'package:money_management/domain/moneys/entities/money_model.dart';
 
 abstract class IMoneyRepository {
   Future<bool> insertPay({required MoneyModel value});

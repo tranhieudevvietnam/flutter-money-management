@@ -1,5 +1,5 @@
 
-import 'package:money_management/models/category_model.dart';
+import 'package:money_management/domain/categories/entities/category_model.dart';
 
 abstract class ICategoryRepository {
   Future<bool> insert({required CategoryModel value});

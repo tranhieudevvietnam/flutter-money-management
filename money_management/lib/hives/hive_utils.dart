@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
 import 'package:money_management/hives/hive_constant.dart';
 
-import '../models/category_model.dart';
-import '../models/money_model.dart';
+import '../domain/categories/entities/category_model.dart';
+import '../domain/moneys/entities/money_model.dart';
 
 class HiveUtil {
   HiveUtil._();

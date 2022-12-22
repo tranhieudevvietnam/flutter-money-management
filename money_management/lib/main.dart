@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:money_management/pages/route.dart';
+
+import 'pages/route_export.dart';
 
 void main() {
   runApp(const AppConfig());

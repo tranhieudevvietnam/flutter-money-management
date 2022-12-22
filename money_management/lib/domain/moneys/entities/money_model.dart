@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:hive/hive.dart';
 import 'package:money_management/constants/data_constant.dart';
 
-import 'category_model.dart';
+import '../../categories/entities/category_model.dart';
 
 part 'money_model.g.dart';
 

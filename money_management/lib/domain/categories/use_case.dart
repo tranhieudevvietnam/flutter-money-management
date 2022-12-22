@@ -1,7 +1,7 @@
-import 'package:money_management/domain/categories/repositories/i_repository.dart';
-import 'package:money_management/domain/result_basic.dart';
+import 'repositories/i_repository.dart';
+import '../result_basic.dart';
 
-import '../../models/category_model.dart';
+import 'entities/category_model.dart';
 
 class CategoryUseCase {
   final ICategoryRepository repo;

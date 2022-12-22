@@ -1,6 +1,6 @@
 import 'package:money_management/domain/moneys/repositories/i_repository.dart';
 import 'package:money_management/domain/result_basic.dart';
-import 'package:money_management/models/money_model.dart';
+import 'package:money_management/domain/moneys/entities/money_model.dart';
 
 class MoneyUseCase {
   final IMoneyRepository repo;

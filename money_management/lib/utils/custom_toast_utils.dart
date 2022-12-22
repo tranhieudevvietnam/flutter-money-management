@@ -9,34 +9,34 @@ void customToastUtils(
   String? msg,
   required ToastType type,
 }) {
-  FlutterToast(context).showToast(
-    child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6.0),
-          color: ColorConst.primary,
-          border: Border.all(color: ColorConst.primary)),
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        runAlignment: WrapAlignment.center,
-        runSpacing: 5,
-        children: [
-          _getDynamicIconToast(type),
-          const SizedBox(
-            width: 12.0,
+  FToast().init(context).showToast(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6.0),
+              color: ColorConst.primary,
+              border: Border.all(color: ColorConst.primary)),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            runAlignment: WrapAlignment.center,
+            runSpacing: 5,
+            children: [
+              _getDynamicIconToast(type),
+              const SizedBox(
+                width: 12.0,
+              ),
+              Text(
+                msg ?? "Đã có lỗi xảy ra vui lòng thử lại sau",
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 14, color: Colors.white),
+              ),
+            ],
           ),
-          Text(
-            msg ?? "Đã có lỗi xảy ra vui lòng thử lại sau",
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 14, color: Colors.white),
-          ),
-        ],
-      ),
-    ),
-    gravity: ToastGravity.CENTER,
-    toastDuration: const Duration(seconds: 4),
-  );
+        ),
+        gravity: ToastGravity.CENTER,
+        toastDuration: const Duration(seconds: 4),
+      );
 }
 
 _getDynamicIconToast(ToastType type) {

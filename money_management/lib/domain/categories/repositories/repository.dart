@@ -1,6 +1,6 @@
 import 'package:money_management/hives/hive_constant.dart';
 import 'package:money_management/hives/hive_utils.dart';
-import 'package:money_management/models/category_model.dart';
+import 'package:money_management/domain/categories/entities/category_model.dart';
 
 import 'i_repository.dart';
 
