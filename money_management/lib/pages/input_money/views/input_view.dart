@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:money_management/constants/color_constant.dart';
 import 'package:money_management/domain/categories/entities/category_model.dart';
+import 'package:money_management/pages/categories/category_export.dart';
 import 'package:money_management/utils/custom_toast_utils.dart';
 import 'package:money_management/utils/format_utils.dart';
+import 'package:money_management/utils/navigator_utils.dart';
 import 'package:money_management/widgets/text_field/mask_text_input_formatter.dart';
 
 enum InputType { pay, collect }
@@ -84,31 +86,39 @@ class InputView extends StatelessWidget {
                 border: Border.all(color: ColorConst.border)),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    const Icon(Icons.format_list_bulleted_outlined),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                        child: ValueListenableBuilder(
-                      valueListenable: categoryNotifier,
-                      builder: (context, value, child) {
-                        if (value == null) {
-                          return const Text(
-                            "Categories....",
-                            style: TextStyle(color: ColorConst.hintText),
-                          );
-                        } else {
-                          return Text(
-                            value.name ?? "N/A",
-                            style: const TextStyle(color: ColorConst.hintText),
-                          );
-                        }
-                      },
-                    )),
-                    const Icon(Icons.navigate_next_outlined),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    NavigatorUtil.push(
+                        routeName: CategoryInputScreen.routeName,
+                        context: context);
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(Icons.format_list_bulleted_outlined),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                          child: ValueListenableBuilder(
+                        valueListenable: categoryNotifier,
+                        builder: (context, value, child) {
+                          if (value == null) {
+                            return const Text(
+                              "Categories....",
+                              style: TextStyle(color: ColorConst.hintText),
+                            );
+                          } else {
+                            return Text(
+                              value.name ?? "N/A",
+                              style:
+                                  const TextStyle(color: ColorConst.hintText),
+                            );
+                          }
+                        },
+                      )),
+                      const Icon(Icons.navigate_next_outlined),
+                    ],
+                  ),
                 ),
                 const Divider(),
                 Row(

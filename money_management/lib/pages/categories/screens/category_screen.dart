@@ -12,6 +12,12 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(title: const Text("Category")),
+      body: SafeArea(
+          child: Column(
+        children: const [Icon(Icons.insert_emoticon_outlined)],
+      )),
+    );
   }
 }

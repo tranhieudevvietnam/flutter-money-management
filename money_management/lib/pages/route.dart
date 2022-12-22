@@ -15,6 +15,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
           builder: (context) => const CategoryInputScreen(),
           settings: settings);
+    case CategoryListIconScreen.routeName:
+      // final map = settings.arguments as Map;
+      return MaterialPageRoute(
+          builder: (context) => const CategoryListIconScreen(),
+          settings: settings);
     default:
       return MaterialPageRoute(
           builder: (context) => const HomeScreen(), settings: settings);
