@@ -83,15 +83,21 @@ class _InputScreenState extends State<InputScreen>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: const [
+                children: [
                   // first tab bar view widget
                   Center(
-                    child: InputPayView(),
+                    child: BlocProvider(
+                      create: (context) => InputMoneyBloc(),
+                      child: InputPayView(),
+                    ),
                   ),
 
                   // second tab bar view widget
                   Center(
-                    child: InputCollectView(),
+                    child: BlocProvider(
+                      create: (context) => InputMoneyBloc(),
+                      child: InputCollectView(),
+                    ),
                   ),
                 ],
               ),
