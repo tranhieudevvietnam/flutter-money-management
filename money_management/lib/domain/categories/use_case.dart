@@ -10,31 +10,38 @@ class CategoryUseCase {
   Future<ResultBasic<bool>> insert({required CategoryModel value}) async {
     final result = await repo.insert(value: value);
     if (result == true) {
-      return ResultBasic(data: result, success: true);
+      return ResultBasic(
+          data: result, success: true, message: "Insert success.");
     }
-    return ResultBasic(data: result, success: false);
+    return ResultBasic(
+        data: result, success: false, message: "Insert failure.");
   }
 
   Future<ResultBasic<bool>> update({required CategoryModel value}) async {
     final result = await repo.update(value: value);
     if (result == true) {
-      return ResultBasic(data: result, success: true);
+      return ResultBasic(
+          data: result, success: true, message: "Update success.");
     }
-    return ResultBasic(data: result, success: false);
+    return ResultBasic(
+        data: result, success: false, message: "Update failure.");
   }
 
   Future<ResultBasic<bool>> delete({required CategoryModel value}) async {
     final result = await repo.delete(value: value);
     if (result == true) {
-      return ResultBasic(data: result, success: true);
+      return ResultBasic(
+          data: result, success: true, message: "Delete success.");
     }
-    return ResultBasic(data: result, success: false);
+    return ResultBasic(
+        data: result, success: false, message: "Delete failure.");
   }
 
   Future<ResultBasic<List<CategoryModel>>> getAll({String? search}) async {
     final result = await repo.getAll(search: search);
     if (result.isNotEmpty == true) {
-      return ResultBasic(data: result, success: true);
+      return ResultBasic(
+          data: result, success: true, message: "Get All success.");
     }
     return ResultBasic(data: result, success: false);
   }

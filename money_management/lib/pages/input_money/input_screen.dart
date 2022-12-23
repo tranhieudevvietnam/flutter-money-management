@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:money_management/constants/color_constant.dart';
-import 'package:money_management/pages/input_money/input_collect/input_collect_view.dart';
-
-import 'input_pay/input_pay_view.dart';
+part of 'input_money_export.dart';
 
 class InputScreen extends StatefulWidget {
   const InputScreen({super.key});
@@ -41,11 +37,12 @@ class _InputScreenState extends State<InputScreen>
       },
       child: Container(
         color: Colors.white,
+        margin: EdgeInsets.only(top: padding.top, bottom: padding.bottom),
         child: Column(
           children: [
             Container(
               height: 45,
-              margin: EdgeInsets.only(top: padding.top, bottom: padding.bottom),
+              margin: const EdgeInsets.only(top: 16),
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(
@@ -64,11 +61,12 @@ class _InputScreenState extends State<InputScreen>
                         borderRadius: BorderRadius.circular(
                           25.0,
                         ),
-                        color:
-                            value == 0 ? ColorConst.error : ColorConst.success,
+                        color: ColorConst.primary,
                       ),
                       labelColor: Colors.white,
-                      unselectedLabelColor: Colors.black,
+                      labelStyle: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                      unselectedLabelColor: ColorConst.text,
                       tabs: const [
                         Tab(
                           text: 'Pay',

@@ -4,7 +4,8 @@ import 'package:money_management/constants/color_constant.dart';
 
 class BasicAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
-  const BasicAppBar(this.title, {super.key});
+  final List<Widget>? actions;
+  const BasicAppBar(this.title, {super.key, this.actions});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -12,14 +13,15 @@ class BasicAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
-      iconTheme: const IconThemeData(color: ColorConst.text),
+      backgroundColor: ColorConst.primary,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+      // iconTheme: const IconThemeData(color: ColorConst.text),
+      actions: actions,
       title: Text(title,
           style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: ColorConst.text)),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          )),
     );
   }
 }

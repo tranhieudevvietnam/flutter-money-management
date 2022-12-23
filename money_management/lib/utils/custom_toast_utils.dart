@@ -60,13 +60,16 @@ _getDynamicIconToast(ToastType type) {
   }
 }
 
-Future<void> showMyDiaLog(BuildContext context, String message) async {
+Future<void> showMyDiaLog(
+    {required BuildContext context,
+    required String title,
+    required String message}) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text("Thông báo"),
+        title: Text(title),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[

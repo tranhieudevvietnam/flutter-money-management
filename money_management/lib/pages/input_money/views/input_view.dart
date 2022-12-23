@@ -1,11 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:money_management/constants/color_constant.dart';
-import 'package:money_management/domain/categories/entities/category_model.dart';
-import 'package:money_management/pages/categories/category_export.dart';
-import 'package:money_management/utils/custom_toast_utils.dart';
-import 'package:money_management/utils/format_utils.dart';
-import 'package:money_management/utils/navigator_utils.dart';
-import 'package:money_management/widgets/text_field/mask_text_input_formatter.dart';
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
+part of '../input_money_export.dart';
 
 enum InputType { pay, collect }
 
@@ -42,6 +37,7 @@ class InputView extends StatelessWidget {
             children: [
               Icon(
                 Icons.attach_money_outlined,
+                size: 30,
                 color: inputType == InputType.pay
                     ? ColorConst.error
                     : ColorConst.success,
@@ -52,6 +48,12 @@ class InputView extends StatelessWidget {
               Expanded(
                 child: TextField(
                   controller: moneyInput,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: inputType == InputType.pay
+                          ? ColorConst.error
+                          : ColorConst.success),
                   inputFormatters: [
                     MaskTextInputFormatter(
                       maskTextInputType: MaskTextInputType.money,
@@ -69,6 +71,7 @@ class InputView extends StatelessWidget {
                   "VND",
                   style: TextStyle(
                       fontSize: 16,
+                      fontWeight: FontWeight.bold,
                       color: inputType == InputType.pay
                           ? ColorConst.error
                           : ColorConst.success),
@@ -87,31 +90,57 @@ class InputView extends StatelessWidget {
             child: Column(
               children: [
                 GestureDetector(
-                  onTap: () {
-                    NavigatorUtil.push(
-                        routeName: CategoryInputScreen.routeName,
-                        context: context);
+                  onTap: () async {
+                    final result = await NavigatorUtil.push(
+                        routeName: CategoryScreen.routeName, context: context);
+                    if (result != null && result is CategoryModel) {
+                      categoryNotifier.value = result;
+                    }
                   },
                   child: Row(
                     children: [
-                      const Icon(Icons.format_list_bulleted_outlined),
-                      const SizedBox(
-                        width: 16,
-                      ),
                       Expanded(
                           child: ValueListenableBuilder(
                         valueListenable: categoryNotifier,
                         builder: (context, value, child) {
                           if (value == null) {
-                            return const Text(
-                              "Categories....",
-                              style: TextStyle(color: ColorConst.hintText),
+                            return Row(
+                              children: [
+                                const Icon(
+                                  Icons.format_list_bulleted_outlined,
+                                  size: 30,
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                const Expanded(
+                                  child: Text(
+                                    "Categories....",
+                                    style: TextStyle(
+                                        color: ColorConst.hintText,
+                                        fontSize: 14),
+                                  ),
+                                ),
+                              ],
                             );
                           } else {
-                            return Text(
-                              value.name ?? "N/A",
-                              style:
-                                  const TextStyle(color: ColorConst.hintText),
+                            return Row(
+                              children: [
+                                Icon(
+                                  getIconByKey(value.icon!),
+                                  size: 30,
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    value.name ?? "N/A",
+                                    style: const TextStyle(
+                                        color: ColorConst.text, fontSize: 14),
+                                  ),
+                                ),
+                              ],
                             );
                           }
                         },
@@ -123,7 +152,10 @@ class InputView extends StatelessWidget {
                 const Divider(),
                 Row(
                   children: const [
-                    Icon(Icons.note_alt_outlined),
+                    Icon(
+                      Icons.note_alt_outlined,
+                      size: 30,
+                    ),
                     SizedBox(
                       width: 16,
                     ),
@@ -140,20 +172,68 @@ class InputView extends StatelessWidget {
                 ),
                 const Divider(),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Icon(Icons.calendar_month_outlined),
+                    const Icon(
+                      Icons.calendar_month_outlined,
+                      size: 30,
+                    ),
                     const SizedBox(
                       width: 16,
                     ),
                     Expanded(
-                        child: ValueListenableBuilder(
+                      child: ValueListenableBuilder(
+                        valueListenable: dateTimeNotifier,
+                        builder: (context, value, child) {
+                          return GestureDetector(
+                            onTap: () {
+                              showMaterialDatePicker(
+                                context: context,
+                                selectedDate: dateTimeNotifier.value,
+                                onChanged: (value) {
+                                  dateTimeNotifier.value = value;
+                                },
+                                firstDate:
+                                    DateTime.now().add(Duration(days: -365)),
+                                lastDate:
+                                    DateTime.now().add(Duration(days: 365)),
+                              );
+                            },
+                            child: Text(
+                              "${FormatUtils.instant.dateTimeConvertString(date: value, type: "dd/MM/yyyy")}",
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    ValueListenableBuilder(
                       valueListenable: dateTimeNotifier,
                       builder: (context, value, child) {
-                        return Text(
-                            "${FormatUtils.instant.dateTimeConvertString(date: value)}");
+                        return GestureDetector(
+                          onTap: () {
+                            var time = TimeOfDay.now();
+                            showMaterialTimePicker(
+                              context: context,
+                              selectedTime: time,
+                              onChanged: (value) {
+                                final dateTimeTemp = dateTimeNotifier.value;
+                                dateTimeNotifier.value = DateTime(
+                                    dateTimeTemp.year,
+                                    dateTimeTemp.month,
+                                    dateTimeTemp.day,
+                                    value.hour,
+                                    value.minute);
+                              },
+                            );
+                          },
+                          child: Text(
+                            "${FormatUtils.instant.dateTimeConvertString(date: value, type: "HH:mm")}",
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        );
                       },
-                    )),
-                    const Icon(Icons.navigate_next_outlined),
+                    ),
                   ],
                 ),
               ],
@@ -168,21 +248,19 @@ class InputView extends StatelessWidget {
                   type: ToastType.success, msg: "Vui lòng chọn danh mục.");
               return;
             }
-            onSave.call(num.parse(moneyInput.text), categoryNotifier.value!,
-                noteInput.text, dateTimeNotifier.value);
+            onSave.call(
+                num.parse(moneyInput.text.replaceAll(".", "")),
+                categoryNotifier.value!,
+                noteInput.text,
+                dateTimeNotifier.value);
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                color: inputType == InputType.pay
-                    ? ColorConst.error
-                    : ColorConst.success,
+                color: ColorConst.primary,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                    color: inputType == InputType.pay
-                        ? ColorConst.error
-                        : ColorConst.success)),
+                border: Border.all(color: ColorConst.primary)),
             child: const Center(
                 child: Text(
               "Save",

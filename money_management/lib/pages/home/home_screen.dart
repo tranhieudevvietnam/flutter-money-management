@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:money_management/constants/color_constant.dart';
 import 'package:money_management/pages/analysis/analysis_screen.dart';
 import 'package:money_management/pages/calendar/calendar_screen.dart';
-import 'package:money_management/pages/input_money/input_screen.dart';
 import 'package:money_management/pages/setting/setting_screen.dart';
+
+import '../input_money/input_money_export.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = "/home/screen";
@@ -31,13 +32,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConst.primary,
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

@@ -5,24 +5,19 @@ import '../domain/categories/entities/category_model.dart';
 import '../domain/moneys/entities/money_model.dart';
 
 class HiveUtil {
-  HiveUtil._();
+  static late Box<List<dynamic>> boxCategories;
+  static late Box<List<dynamic>> boxMoney;
 
-  static HiveUtil get instant => HiveUtil._();
-
-  late Box<List<CategoryModel>> boxCategories;
-  late Box<List<MoneyModel>> boxMoney;
-
-  init() async {
+  static init() async {
     // Register Adapter
     registerAdapter();
     // Open box
-    boxCategories =
-        await Hive.openBox<List<CategoryModel>>(HiveConstant.categories);
-    boxMoney = await Hive.openBox<List<MoneyModel>>(HiveConstant.collectMoney);
+    boxCategories = await Hive.openBox(HiveConstant.categories);
+    boxMoney = await Hive.openBox(HiveConstant.collectMoney);
   }
 
   // Register Adapter
-  registerAdapter() {
+  static registerAdapter() {
     Hive.registerAdapter(CategoryModelAdapter());
     Hive.registerAdapter(MoneyModelAdapter());
   }

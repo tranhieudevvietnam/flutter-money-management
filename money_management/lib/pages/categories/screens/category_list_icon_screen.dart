@@ -41,7 +41,7 @@ class _CategoryListIconScreenState extends State<CategoryListIconScreen> {
     int i = 0;
     while (i < length) {
       if ((index + i) < data.length) {
-        final iconData = data.entries.elementAt(index + i).value;
+        final iconData = data.entries.elementAt(index + i);
         listWidgets.add(Expanded(
             child: InkWell(
           onTap: () {
@@ -50,7 +50,7 @@ class _CategoryListIconScreenState extends State<CategoryListIconScreen> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Icon(
-              iconData,
+              iconData.value,
               size: 40,
             ),
           ),

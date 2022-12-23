@@ -15,8 +15,10 @@ class CategoryModel {
   String? icon;
   @HiveField(3)
   List<CategoryModel>? subCategories;
+  @HiveField(4)
+  String? note;
 
-  CategoryModel({this.name, this.icon, this.subCategories}) {
+  CategoryModel({this.name, this.icon, this.subCategories, this.note}) {
     id = Random().nextInt(DataConst.valueRandom);
   }
 }

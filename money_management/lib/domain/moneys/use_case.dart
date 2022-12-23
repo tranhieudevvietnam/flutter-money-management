@@ -14,13 +14,13 @@ class MoneyUseCase {
     return ResultBasic(data: result, success: false);
   }
 
-  Future<ResultBasic<bool>> insertCollect({required MoneyModel value}) async {
-    final result = await repo.insertCollect(value: value);
-    if (result == true) {
-      return ResultBasic(data: result, success: true);
-    }
-    return ResultBasic(data: result, success: false);
-  }
+  // Future<ResultBasic<bool>> insertCollect({required MoneyModel value}) async {
+  //   final result = await repo.insertCollect(value: value);
+  //   if (result == true) {
+  //     return ResultBasic(data: result, success: true);
+  //   }
+  //   return ResultBasic(data: result, success: false);
+  // }
 
   Future<ResultBasic<bool>> updatePay({required MoneyModel value}) async {
     final result = await repo.updatePay(value: value);
@@ -30,13 +30,13 @@ class MoneyUseCase {
     return ResultBasic(data: result, success: false);
   }
 
-  Future<ResultBasic<bool>> updateCollect({required MoneyModel value}) async {
-    final result = await repo.updateCollect(value: value);
-    if (result == true) {
-      return ResultBasic(data: result, success: true);
-    }
-    return ResultBasic(data: result, success: false);
-  }
+  // Future<ResultBasic<bool>> updateCollect({required MoneyModel value}) async {
+  //   final result = await repo.updateCollect(value: value);
+  //   if (result == true) {
+  //     return ResultBasic(data: result, success: true);
+  //   }
+  //   return ResultBasic(data: result, success: false);
+  // }
 
   Future<ResultBasic<bool>> deletePay({required MoneyModel value}) async {
     final result = await repo.deletePay(value: value);
@@ -46,13 +46,13 @@ class MoneyUseCase {
     return ResultBasic(data: result, success: false);
   }
 
-  Future<ResultBasic<bool>> deleteCollect({required MoneyModel value}) async {
-    final result = await repo.deleteCollect(value: value);
-    if (result == true) {
-      return ResultBasic(data: result, success: true);
-    }
-    return ResultBasic(data: result, success: false);
-  }
+  // Future<ResultBasic<bool>> deleteCollect({required MoneyModel value}) async {
+  //   final result = await repo.deleteCollect(value: value);
+  //   if (result == true) {
+  //     return ResultBasic(data: result, success: true);
+  //   }
+  //   return ResultBasic(data: result, success: false);
+  // }
 
   Future<ResultBasic<List<MoneyModel>>> getAllPay({String? search}) async {
     final result = await repo.getAllPay(search: search);
@@ -62,11 +62,11 @@ class MoneyUseCase {
     return ResultBasic(data: result, success: false);
   }
 
-  Future<ResultBasic<List<MoneyModel>>> getAllCollect({String? search}) async {
-    final result = await repo.getAllCollect(search: search);
-    if (result.isNotEmpty == true) {
-      return ResultBasic(data: result, success: true);
-    }
-    return ResultBasic(data: result, success: false);
-  }
+  // Future<ResultBasic<List<MoneyModel>>> getAllCollect({String? search}) async {
+  //   final result = await repo.getAllCollect(search: search);
+  //   if (result.isNotEmpty == true) {
+  //     return ResultBasic(data: result, success: true);
+  //   }
+  //   return ResultBasic(data: result, success: false);
+  // }
 }

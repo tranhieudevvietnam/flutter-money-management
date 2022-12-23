@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:money_management/pages/input_money/views/input_view.dart';
+part of '../input_money_export.dart';
 
 class InputCollectView extends StatefulWidget {
   const InputCollectView({super.key});
@@ -15,6 +14,7 @@ class _InputCollectViewState extends State<InputCollectView>
       
   @override
   Widget build(BuildContext context) {
+  
     super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

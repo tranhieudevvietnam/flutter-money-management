@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive/hive.dart';
+import 'package:money_management/hives/hive_utils.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'pages/route_export.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDirectory.path);
+  await HiveUtil.init();
+
   runApp(const AppConfig());
 }
 

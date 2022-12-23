@@ -45,9 +45,9 @@ class MaskTextInputFormatter implements TextInputFormatter {
 
         // debugPrint("_newText: ${_newText}");
         // debugPrint("_textTemp: ${_textTemp}");
-        if (textTemp.isEmpty) {
-          newText = newText.replaceAll("0", "");
-        }
+        // if (textTemp.isEmpty) {
+        //   newText = newText.replaceAll("0", "");
+        // }
 
         return TextEditingValue(
             text: newText,

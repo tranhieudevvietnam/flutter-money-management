@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+getIconByKey(String key) {
+  return materialIcons.entries
+      .firstWhere((element) => element.key == key)
+      .value;
+}
+
 Map<String, IconData> materialIcons = {
   'savings_outlined': Icons.savings_outlined,
   'shopping_cart_outlined': Icons.shopping_cart_outlined,

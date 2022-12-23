@@ -9,12 +9,30 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case CategoryScreen.routeName:
       // final map = settings.arguments as Map;
       return MaterialPageRoute(
-          builder: (context) => const CategoryScreen(), settings: settings);
-    case CategoryInputScreen.routeName:
-      // final map = settings.arguments as Map;
-      return MaterialPageRoute(
-          builder: (context) => const CategoryInputScreen(),
+          builder: (context) => BlocProvider(
+                create: (context) => CategoryBloc(),
+                child: const CategoryScreen(),
+              ),
           settings: settings);
+    case CategoryInputScreen.routeName:
+      try {
+        final map = settings.arguments as Map;
+        return MaterialPageRoute(
+            builder: (context) => BlocProvider(
+                  create: (context) => CategoryInputBloc(),
+                  child: CategoryInputScreen(data: map["data"]),
+                ),
+            settings: settings);
+      } catch (error) {
+        return MaterialPageRoute(
+            builder: (context) => BlocProvider(
+                  create: (context) => CategoryInputBloc(),
+                  child: const CategoryInputScreen(),
+                ),
+            settings: settings);
+      }
+
+      break;
     case CategoryListIconScreen.routeName:
       // final map = settings.arguments as Map;
       return MaterialPageRoute(

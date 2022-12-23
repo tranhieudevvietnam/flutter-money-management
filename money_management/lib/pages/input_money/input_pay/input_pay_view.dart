@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:money_management/pages/input_money/views/input_view.dart';
+part of '../input_money_export.dart';
 
 class InputPayView extends StatefulWidget {
   const InputPayView({super.key});
@@ -17,7 +16,9 @@ class _InputPayViewState extends State<InputPayView>
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: InputView(
         inputType: InputType.pay,
-        onSave: (money, category, note, date) {},
+        onSave: (money, category, note, date) {
+          
+        },
       ),
     );
   }
