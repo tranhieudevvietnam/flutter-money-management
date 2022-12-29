@@ -31,8 +31,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 ),
             settings: settings);
       }
-
-      break;
+    case AnalysisDetailScreen.routeName:
+      // final map = settings.arguments as Map;
+      return MaterialPageRoute(
+          builder: (context) => const AnalysisDetailScreen(),
+          settings: settings);
     case CategoryListIconScreen.routeName:
       // final map = settings.arguments as Map;
       return MaterialPageRoute(

@@ -9,18 +9,30 @@ class InputCollectView extends StatefulWidget {
 
 class _InputCollectViewState extends State<InputCollectView>
     with AutomaticKeepAliveClientMixin {
+  late InputMoneyBloc moneyBloc;
 
+  @override
+  void initState() {
+    super.initState();
+    moneyBloc = BlocProvider.of<InputMoneyBloc>(context);
+  }
 
-      
   @override
   Widget build(BuildContext context) {
-  
     super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: InputView(
         inputType: InputType.collect,
-        onSave: (money, category, note, date) {},
+        bloc: moneyBloc,
+        onSave: (money, category, note, date) {
+          moneyBloc.add(InputInsertEvent(
+              categoryModel: category,
+              note: note,
+              dateTime: date,
+              type: MoneyType.collect,
+              money: money));
+        },
       ),
     );
   }

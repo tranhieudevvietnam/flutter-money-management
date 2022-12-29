@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:money_management/domain/moneys/entities/money_type.dart';
 import 'package:money_management/hives/hive_constant.dart';
 
 import '../domain/categories/entities/category_model.dart';
@@ -20,5 +21,6 @@ class HiveUtil {
   static registerAdapter() {
     Hive.registerAdapter(CategoryModelAdapter());
     Hive.registerAdapter(MoneyModelAdapter());
+    Hive.registerAdapter(MoneyTypeAdapter());
   }
 }

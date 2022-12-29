@@ -7,5 +7,5 @@ class HiveConstant {
 class HiveKeyConstant {
   static const String categories = "Categories";
   static const String payMoney = "PayMoney";
-  static const String collectMoney = "CollectMoney";
+  // static const String collectMoney = "CollectMoney";
 }

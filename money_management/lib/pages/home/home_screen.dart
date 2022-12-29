@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_management/constants/color_constant.dart';
-import 'package:money_management/pages/analysis/analysis_screen.dart';
+import 'package:money_management/pages/analysis/bloc/analysis_bloc.dart';
+import 'package:money_management/pages/calendar/bloc/calendar_bloc.dart';
 import 'package:money_management/pages/calendar/calendar_screen.dart';
 import 'package:money_management/pages/setting/setting_screen.dart';
 
+import '../analysis/analysis_export.dart';
 import '../input_money/input_money_export.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,11 +20,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    InputScreen(),
-    AnalysisScreen(),
-    CalendarScreen(),
-    SettingScreen(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const InputScreen(),
+    BlocProvider(
+      create: (context) => AnalysisBloc(),
+      child: const AnalysisScreen(),
+    ),
+    BlocProvider(
+      create: (context) => CalendarBloc(),
+      child: const CalendarScreen(),
+    ),
+    const SettingScreen(),
   ];
 
   void _onItemTapped(int index) {

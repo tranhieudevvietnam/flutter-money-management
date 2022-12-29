@@ -22,7 +22,7 @@ class MaskTextInputFormatter implements TextInputFormatter {
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     try {
-      // debugPrint("newValue: ${newValue.text}");
+      debugPrint("newValue: ${newValue.text}");
       String newText = "";
       if (maskTextInputType == MaskTextInputType.none) {
       } else if ((maskTextInputType == MaskTextInputType.number ||

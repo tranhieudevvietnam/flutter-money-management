@@ -41,13 +41,13 @@ class _InputScreenState extends State<InputScreen>
         child: Column(
           children: [
             Container(
-              height: 45,
-              margin: const EdgeInsets.only(top: 16),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(
-                  25.0,
-                ),
+              // height: 45,
+              padding: const EdgeInsets.only(top: 16, bottom: 16),
+              decoration: const BoxDecoration(
+                color: ColorConst.primary,
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30)),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -61,12 +61,12 @@ class _InputScreenState extends State<InputScreen>
                         borderRadius: BorderRadius.circular(
                           25.0,
                         ),
-                        color: ColorConst.primary,
+                        color: Colors.white,
                       ),
-                      labelColor: Colors.white,
+                      labelColor: ColorConst.primary,
                       labelStyle: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
-                      unselectedLabelColor: ColorConst.text,
+                      unselectedLabelColor: Colors.white,
                       tabs: const [
                         Tab(
                           text: 'Pay',
@@ -88,7 +88,7 @@ class _InputScreenState extends State<InputScreen>
                   Center(
                     child: BlocProvider(
                       create: (context) => InputMoneyBloc(),
-                      child: InputPayView(),
+                      child: const InputPayView(),
                     ),
                   ),
 
@@ -96,7 +96,7 @@ class _InputScreenState extends State<InputScreen>
                   Center(
                     child: BlocProvider(
                       create: (context) => InputMoneyBloc(),
-                      child: InputCollectView(),
+                      child: const InputCollectView(),
                     ),
                   ),
                 ],

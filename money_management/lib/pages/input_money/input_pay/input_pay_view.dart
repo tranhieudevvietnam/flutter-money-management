@@ -9,16 +9,38 @@ class InputPayView extends StatefulWidget {
 
 class _InputPayViewState extends State<InputPayView>
     with AutomaticKeepAliveClientMixin {
+  late InputMoneyBloc moneyBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    moneyBloc = BlocProvider.of<InputMoneyBloc>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      child: InputView(
-        inputType: InputType.pay,
-        onSave: (money, category, note, date) {
-          
-        },
+    return BlocListener<InputMoneyBloc, InputMoneyState>(
+      bloc: moneyBloc,
+      listenWhen: (previous, current) =>
+          current is InputInsertSuccess || current is InputInsertFailure,
+      listener: (context, state) {
+
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: InputView(
+          bloc: moneyBloc,
+          inputType: InputType.pay,
+          onSave: (money, category, note, date) {
+            moneyBloc.add(InputInsertEvent(
+                categoryModel: category,
+                note: note,
+                dateTime: date,
+                type: MoneyType.pay,
+                money: money));
+          },
+        ),
       ),
     );
   }

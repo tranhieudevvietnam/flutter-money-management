@@ -1,9 +1,11 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:money_management/constants/data_constant.dart';
 
 import '../../categories/entities/category_model.dart';
+import 'money_type.dart';
 
 part 'money_model.g.dart';
 
@@ -30,13 +32,7 @@ class MoneyModel {
       this.money = 0}) {
     id = Random().nextInt(DataConst.valueRandom);
   }
-}
 
-@HiveType(typeId: 3)
-enum MoneyType {
-  @HiveField(0)
-  pay,
-
-  @HiveField(1)
-  collect,
+  num? percent;
+  Color? color;
 }
