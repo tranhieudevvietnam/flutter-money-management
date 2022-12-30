@@ -6,8 +6,15 @@ abstract class AnalysisState {}
 class AnalysisInitial extends AnalysisState {}
 
 class AnalysisGetAllPaymentSuccess extends AnalysisState {
-  final List<MoneyModel> listData;
-  AnalysisGetAllPaymentSuccess({required this.listData});
+  final List<MoneyModel> listDataCollect;
+  final List<MoneyModel> listDataPay;
+  final num sumCollect;
+  final num sumPay;
+  AnalysisGetAllPaymentSuccess(
+      {required this.listDataCollect,
+      required this.listDataPay,
+      required this.sumCollect,
+      required this.sumPay});
 }
 
 // ignore: must_be_immutable

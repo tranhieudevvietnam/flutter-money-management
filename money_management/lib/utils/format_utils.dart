@@ -7,4 +7,12 @@ class FormatUtils {
     String formattedDate = DateFormat(type ?? "dd/MM/yyyy HH:mm").format(date);
     return formattedDate;
   }
+
+  moneyFormat({required num money}) {
+    return "${NumberFormat("#,###", 'vi').format(money)} VNĐ";
+  }
+
+  numberFormat({required num money}) {
+    return NumberFormat("#,###", 'vi').format(money);
+  }
 }

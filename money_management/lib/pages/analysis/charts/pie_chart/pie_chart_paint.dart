@@ -47,28 +47,20 @@ class PieChartPaint extends CustomPainter {
   handleTouch(
     Offset localPosition,
   ) {
-    debugPrint('localPosition: $localPosition');
-
     final sectionsAngle = calculateSectionsAngle(sumValue);
 
     final center = Offset(viewSize.width / 2, viewSize.height / 2);
-    debugPrint('center: $center');
 
     final touchedPoint2 = localPosition - center;
 
     final touchX = touchedPoint2.dx;
     final touchY = touchedPoint2.dy;
-    debugPrint('touchX: $touchX');
-    debugPrint('touchY: $touchY');
 
     // final touchR = math.sqrt(math.pow(touchX, 2) + math.pow(touchY, 2));
     final touchR = math.sqrt(math.pow(touchX, 2) + math.pow(touchY, 2));
 
     var touchAngle = Utils().degrees(math.atan2(touchY, touchX));
     touchAngle = touchAngle < 0 ? (180 - touchAngle.abs()) + 180 : touchAngle;
-
-    debugPrint('touchR: $touchR');
-    debugPrint('touchAngle: $touchAngle');
 
     PieChartData? foundSectionData;
     var foundSectionDataPosition = -1;
@@ -98,10 +90,6 @@ class PieChartPaint extends CustomPainter {
       final centerRadius = calculateCenterRadius(viewSize);
       final sectionRadius = centerRadius + section.radius;
       final isInRadius = touchR > centerRadius && touchR <= sectionRadius;
-      debugPrint(
-          "fromDegree - ${sections[i].title}: $fromDegree  -  toDegree: $toDegree");
-      debugPrint(
-          "sectionRadius - ${sections[i].title}: $sectionRadius - centerRadius: $centerRadius");
 
       if (isInDegree && isInRadius) {
         foundSectionData = section;
@@ -309,16 +297,6 @@ class PieChartPaint extends CustomPainter {
       ..arcTo(centerRadiusRect, endRadians, -sweepRadians, false)
       ..moveTo(startLine.from.dx, startLine.from.dy)
       ..close();
-
-    // debugPrint("value: ${section.value}");
-    // debugPrint("startLine.from.dx: ${startLine.from.dx}");
-    // debugPrint("startLine.from.dy: ${startLine.from.dy}");
-    // debugPrint("startLine.to.dx: ${startLine.to.dx}");
-    // debugPrint("startLine.to.dy: ${startLine.to.dy}");
-    // debugPrint("endLine.from.dx: ${endLine.from.dx}");
-    // debugPrint("endLine.from.dy: ${endLine.from.dy}");
-    // debugPrint("endLine.to.dx: ${endLine.to.dx}");
-    // debugPrint("endLine.to.dy: ${endLine.to.dy}");
 
     /// Subtract section space from the sectionPath
     if (sectionSpace != 0) {

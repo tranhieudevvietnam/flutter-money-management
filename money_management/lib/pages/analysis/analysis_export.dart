@@ -9,6 +9,7 @@ import 'package:money_management/domain/moneys/entities/money_model.dart';
 import 'package:money_management/domain/moneys/entities/money_type.dart';
 import 'package:money_management/pages/analysis/bloc/analysis_bloc.dart';
 import 'package:money_management/pages/analysis/charts/line_chart/chart_line.dart';
+import 'package:money_management/utils/format_utils.dart';
 import 'package:money_management/utils/navigator_utils.dart';
 import 'package:money_management/widgets/appbar/base_appbar.dart';
 

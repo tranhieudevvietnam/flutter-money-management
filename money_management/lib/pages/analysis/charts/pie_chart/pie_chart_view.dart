@@ -9,7 +9,12 @@ import 'pie_chart_paint.dart';
 class PieChartView extends StatefulWidget {
   List<MoneyModel> listData;
   final MoneyType moneyType;
-  PieChartView({super.key, required this.listData, required this.moneyType});
+  final Function(int index) onTap;
+  PieChartView(
+      {super.key,
+      required this.listData,
+      required this.moneyType,
+      required this.onTap});
 
   @override
   State<PieChartView> createState() => _PieChartViewState();
@@ -29,6 +34,7 @@ class _PieChartViewState extends State<PieChartView> {
     final customPaint = PieChartPaint(
       context: context,
       callBackTouch: (pieSelected, index) {
+        widget.onTap.call(index);
         setState(() {
           touchedIndex = index;
         });
@@ -43,11 +49,11 @@ class _PieChartViewState extends State<PieChartView> {
       width: width,
       child: Listener(
         onPointerDown: (event) {
-          // RenderBox? renderBox = context.findRenderObject() as RenderBox;
-          // final position = renderBox.globalToLocal(event.position);
-          // customPaint.handleTouch(
-          //   position,
-          // );
+          RenderBox? renderBox = context.findRenderObject() as RenderBox;
+          final position = renderBox.globalToLocal(event.position);
+          customPaint.handleTouch(
+            position,
+          );
         },
         child: CustomPaint(
           size: Size(MediaQuery.of(context).size.width, 300),
@@ -75,22 +81,18 @@ class _PieChartViewState extends State<PieChartView> {
     }
     return List.generate(widget.listData.length, (i) {
       final isTouched = i == touchedIndex;
-      const fontSize = 14.0;
-      // final fontSize = isTouched ? 26.0 : 16.0;
-      final radius =
-          isTouched || widget.listData[i].moneyType == widget.moneyType
-              ? (height / 3)
-              : (height / 3 - 20);
+      final fontSize = isTouched ? 20.0 : 14.0;
+      final radius = isTouched ? (height / 2.5) : (height / 2.5 - 20);
       return PieChartData(
         color: widget.listData[i].color!,
         value: widget.listData[i].percent!.toDouble(),
         title: '${widget.listData[i].percent!.round()}%',
         radius: radius,
         borderSide: const BorderSide(width: 1, color: Colors.white),
-        titleStyle: const TextStyle(
+        titleStyle: TextStyle(
           fontSize: fontSize,
           fontWeight: FontWeight.bold,
-          color: Color(0xffffffff),
+          color: const Color(0xffffffff),
         ),
       );
     });
