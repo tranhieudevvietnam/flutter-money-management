@@ -45,4 +45,15 @@ class CategoryUseCase {
     }
     return ResultBasic(data: result, success: false);
   }
+
+  Future<ResultBasic<CategoryModel?>> getOne(
+      {required CategoryModel data}) async {
+    final result = await repo.getAll();
+    if (result.isNotEmpty == true) {
+      final dataResult = result.firstWhere((element) => element == data);
+      return ResultBasic(
+          data: dataResult, success: true, message: "Get All success.");
+    }
+    return ResultBasic(data: null, success: false);
+  }
 }

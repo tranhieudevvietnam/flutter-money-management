@@ -24,6 +24,7 @@ class MoneyModel {
   @HiveField(5)
   MoneyType? moneyType;
 
+
   MoneyModel(
       {this.moneyType,
       this.category,

@@ -13,6 +13,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc() : super(CategoryInitial()) {
     useCase = CategoryUseCase(CategoryRepository());
     on<CategoryGetAllEvent>(_onCategoryGetAllEvent);
+    on<CategoryGetOneEvent>(_onCategoryGetOneEvent);
   }
 
   late CategoryUseCase useCase;
@@ -23,7 +24,11 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     emit(CategoryGetAllSuccess(result.data));
   }
 
-
-
-
+  FutureOr<void> _onCategoryGetOneEvent(
+      CategoryGetOneEvent event, Emitter<CategoryState> emit) async {
+    final result = await useCase.getOne(data: event.data);
+    if(result.data!=null){
+      emit(CategoryGetOneSuccess(result.data!));
+    }
+  }
 }

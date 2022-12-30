@@ -14,6 +14,8 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
   CategoryInputBloc() : super(CategoryInputInitial()) {
     on<CategoryCreateEvent>(_onCategoryCreateEvent);
     on<CategoryCreateSubCategoryEvent>(_onCategoryCreateSubCategoryEvent);
+    on<CategoryDeleteEvent>(_onCategoryDeleteEvent);
+    on<CategoryEditEvent>(_onCategoryEditEvent);
   }
   final CategoryUseCase useCase = CategoryUseCase(CategoryRepository());
 
@@ -37,6 +39,7 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
       Emitter<CategoryInputState> emit) async {
     CategoryModel categoryModel = CategoryModel(
         icon: event.iconData,
+        parentId: event.parentId,
         name: event.categoryName,
         subCategories: [],
         note: event.note);
@@ -55,6 +58,27 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
       }
     } else {
       emit(CategoryInputCreateFailure(message: "Error ^_^"));
+    }
+  }
+
+  FutureOr<void> _onCategoryDeleteEvent(
+      CategoryDeleteEvent event, Emitter<CategoryInputState> emit) async {
+    final result = await useCase.delete(value: event.dataInput);
+    if (result.success == true) {
+
+      emit(CategoryChangeSuccess(message: result.message));
+    } else {
+      emit(CategoryChangeFailure(message: result.message));
+    }
+  }
+
+  FutureOr<void> _onCategoryEditEvent(
+      CategoryEditEvent event, Emitter<CategoryInputState> emit) async {
+    final result = await useCase.update(value: event.dataInput);
+    if (result.success == true) {
+      emit(CategoryChangeSuccess(message: result.message));
+    } else {
+      emit(CategoryChangeFailure(message: result.message));
     }
   }
 }

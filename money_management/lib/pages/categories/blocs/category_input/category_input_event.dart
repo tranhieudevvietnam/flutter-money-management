@@ -17,10 +17,23 @@ class CategoryCreateSubCategoryEvent extends CategoryInputEvent {
   final String note;
   final String iconData;
   final CategoryModel data;
+  final int parentId;
 
   CategoryCreateSubCategoryEvent(
       {required this.data,
+      required this.parentId,
       required this.categoryName,
       required this.note,
       required this.iconData});
+}
+
+class CategoryDeleteEvent extends CategoryInputEvent {
+  final CategoryModel dataInput;
+  CategoryDeleteEvent(this.dataInput);
+}
+
+
+class CategoryEditEvent extends CategoryInputEvent {
+  final CategoryModel dataInput;
+  CategoryEditEvent(this.dataInput);
 }

@@ -278,7 +278,6 @@ class MyCustomPaint extends CustomPainter {
     required double valueNext,
     required double maxValue,
   }) {
-    // print("xxxx: ${index * 20}");
     if ((maxValue - (index * jump)) >= 0) {
       final Paint paint3 = Paint()
         ..color = const Color(0xffE7E7E8)

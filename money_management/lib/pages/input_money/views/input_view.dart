@@ -283,6 +283,11 @@ class _InputViewState extends State<InputView> {
                     type: ToastType.success, msg: "Vui lòng chọn danh mục.");
                 return;
               }
+              if (int.parse(moneyInput.text.replaceAll(".", "")) <= 0) {
+                customToastUtils(context,
+                    type: ToastType.success, msg: "Vui lòng nhập số tiền.");
+                return;
+              }
               widget.onSave.call(
                   num.parse(moneyInput.text.replaceAll(".", "")),
                   categoryNotifier.value!,

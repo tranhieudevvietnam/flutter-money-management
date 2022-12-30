@@ -10,3 +10,8 @@ class CategoryGetAllSuccess extends CategoryState {
 
   CategoryGetAllSuccess(this.listData);
 }
+
+class CategoryGetOneSuccess extends CategoryState {
+  final CategoryModel data;
+  CategoryGetOneSuccess(this.data);
+}

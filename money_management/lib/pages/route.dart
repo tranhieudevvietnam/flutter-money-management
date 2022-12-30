@@ -9,9 +9,31 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case CategoryScreen.routeName:
       // final map = settings.arguments as Map;
       return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-                create: (context) => CategoryBloc(),
+          builder: (context) => MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => CategoryBloc(),
+                  ),
+                  BlocProvider(
+                    create: (context) => CategoryInputBloc(),
+                  ),
+                ],
                 child: const CategoryScreen(),
+              ),
+          settings: settings);
+    case CategoryEditScreen.routeName:
+      final map = settings.arguments as Map;
+      return MaterialPageRoute(
+          builder: (context) => MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => CategoryBloc(),
+                  ),
+                  BlocProvider(
+                    create: (context) => CategoryInputBloc(),
+                  ),
+                ],
+                child: CategoryEditScreen(data: map["data"]),
               ),
           settings: settings);
     case CategoryInputScreen.routeName:
@@ -20,14 +42,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
                   create: (context) => CategoryInputBloc(),
-                  child: CategoryInputScreen(data: map["data"]),
+                  child: CategoryInputScreen(
+                      data: map["data"], edit: map["edit"] ?? false,dataParent: map["dataParent"]),
                 ),
             settings: settings);
       } catch (error) {
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
                   create: (context) => CategoryInputBloc(),
-                  child: const CategoryInputScreen(),
+                  child:  CategoryInputScreen(),
                 ),
             settings: settings);
       }

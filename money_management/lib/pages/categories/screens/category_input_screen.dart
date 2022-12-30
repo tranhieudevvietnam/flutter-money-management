@@ -3,7 +3,11 @@ part of '../category_export.dart';
 class CategoryInputScreen extends StatefulWidget {
   static const String routeName = "/category/input/screen";
   final CategoryModel? data;
-  const CategoryInputScreen({super.key, this.data});
+  final CategoryModel? dataParent;
+  final bool edit;
+  const CategoryInputScreen(
+      {super.key, this.data, this.dataParent, this.edit = false})
+      : assert(edit == true && dataParent != null || edit == false);
 
   @override
   State<CategoryInputScreen> createState() => _CategoryInputScreenState();
@@ -19,6 +23,11 @@ class _CategoryInputScreenState extends State<CategoryInputScreen> {
   @override
   void initState() {
     inputBloc = BlocProvider.of<CategoryInputBloc>(context);
+    if (widget.edit == true && widget.data != null) {
+      categoryInput.text = widget.data?.name ?? "";
+      noteInput.text = widget.data?.note ?? "";
+      iconData = {widget.data!.icon!: getIconByKey(widget.data!.icon!)};
+    }
     super.initState();
   }
 
@@ -32,7 +41,7 @@ class _CategoryInputScreenState extends State<CategoryInputScreen> {
         if (state is CategoryInputCreateSuccess) {
           customToastUtils(context,
               type: ToastType.success, msg: state.message);
-          NavigatorUtil.pop(context: context,result: true);
+          NavigatorUtil.pop(context: context, result: true);
           return;
         }
         if (state is CategoryInputCreateFailure) {
@@ -152,23 +161,40 @@ class _CategoryInputScreenState extends State<CategoryInputScreen> {
 
               GestureDetector(
                 onTap: () {
-                  if (categoryInput.text.isEmpty == true) {
-                    showMyDiaLog(
-                        context: context,
-                        title: "Warning",
-                        message: "Please enter category name");
+                  if (widget.edit == true && widget.dataParent != null) {
+                    final indexData = widget.dataParent?.subCategories
+                        ?.indexWhere(
+                            (element) => element.id == widget.data?.id);
+                    if (indexData != null && indexData > -1) {
+                      widget.dataParent!.subCategories![indexData].name =
+                          categoryInput.text;
+                      widget.dataParent!.subCategories![indexData].note =
+                          noteInput.text;
+                      widget.dataParent!.subCategories![indexData].icon =
+                          iconData.keys.first;
+                    }
+                    inputBloc.add(CategoryEditEvent(widget.dataParent!));
+                    NavigatorUtil.pop(context: context, result: true);
                   } else {
-                    if (widget.data != null) {
-                      inputBloc.add(CategoryCreateSubCategoryEvent(
-                          data: widget.data!,
-                          categoryName: categoryInput.text,
-                          note: noteInput.text,
-                          iconData: iconData.keys.first));
+                    if (categoryInput.text.isEmpty == true) {
+                      showMyDiaLog(
+                          context: context,
+                          title: "Warning",
+                          message: "Please enter category name");
                     } else {
-                      inputBloc.add(CategoryCreateEvent(
-                          categoryName: categoryInput.text,
-                          note: noteInput.text,
-                          iconData: iconData.keys.first));
+                      if (widget.data != null) {
+                        inputBloc.add(CategoryCreateSubCategoryEvent(
+                          parentId: widget.data!.id,
+                            data: widget.data!,
+                            categoryName: categoryInput.text,
+                            note: noteInput.text,
+                            iconData: iconData.keys.first));
+                      } else {
+                        inputBloc.add(CategoryCreateEvent(
+                            categoryName: categoryInput.text,
+                            note: noteInput.text,
+                            iconData: iconData.keys.first));
+                      }
                     }
                   }
                 },
