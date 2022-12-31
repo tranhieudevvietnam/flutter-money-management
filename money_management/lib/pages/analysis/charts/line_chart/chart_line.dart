@@ -180,21 +180,21 @@ class MyCustomPaint extends CustomPainter {
 
       //#region below color line
 
-      Paint barAreaPaint = Paint()
-        ..style = PaintingStyle.fill
-        ..color = item.first.color.withOpacity(.2);
-      pathBelow.moveTo(listOffset.first.dx, listOffset.first.dy);
+      // Paint barAreaPaint = Paint()
+      //   ..style = PaintingStyle.fill
+      //   ..color = item.first.color.withOpacity(.2);
+      // pathBelow.moveTo(listOffset.first.dx, listOffset.first.dy);
 
-      for (int i = 0; (i + 1) < listOffset.length; i++) {
-        canvas.drawLine(listOffset[i], listOffset[i + 1], paint2);
-        pathBelow.lineTo(listOffset[i + 1].dx, listOffset[i + 1].dy);
-        if ((i + 1) == listOffset.length - 1) {
-          pathBelow.lineTo(listOffset[i + 1].dx, size.height - paddingY);
-        }
-      }
-      pathBelow.lineTo(paddingX, size.height - paddingY);
+      // for (int i = 0; (i + 1) < listOffset.length; i++) {
+      //   canvas.drawLine(listOffset[i], listOffset[i + 1], paint2);
+      //   pathBelow.lineTo(listOffset[i + 1].dx, listOffset[i + 1].dy);
+      //   if ((i + 1) == listOffset.length - 1) {
+      //     pathBelow.lineTo(listOffset[i + 1].dx, size.height - paddingY);
+      //   }
+      // }
+      // pathBelow.lineTo(paddingX, size.height - paddingY);
 
-      canvas.drawPath(pathBelow, barAreaPaint);
+      // canvas.drawPath(pathBelow, barAreaPaint);
 
       //#endregion
       canvas.drawPoints(pointMode, listOffset, paint);

@@ -1,7 +1,7 @@
 part of 'analysis_export.dart';
 
 class AnalysisDetailScreen extends StatefulWidget {
-  static const String routeName= "/analysis/detail/screen";
+  static const String routeName = "/analysis/detail/screen";
 
   const AnalysisDetailScreen({super.key});
 
@@ -15,39 +15,23 @@ class _AnalysisDetailScreenState extends State<AnalysisDetailScreen> {
     List<List<ChartModel>> listData = [];
     listData = [
       [
-        ChartModel(
-            time: "T1",
-            value: Random().nextInt(10000000),
-            color: Colors.blue.shade300),
-        ChartModel(time: "T2", value: Random().nextInt(10000000)),
-        ChartModel(time: "T3", value: Random().nextInt(10000000)),
-        ChartModel(time: "T4", value: Random().nextInt(10000000)),
-        ChartModel(time: "T5", value: Random().nextInt(10000000)),
-        ChartModel(time: "T6", value: Random().nextInt(10000000)),
-        ChartModel(time: "T7", value: Random().nextInt(10000000)),
-        ChartModel(time: "T8", value: Random().nextInt(10000000)),
-        ChartModel(time: "T9", value: Random().nextInt(10000000)),
-        ChartModel(time: "T10", value: Random().nextInt(10000000)),
-        ChartModel(time: "T11", value: Random().nextInt(10000000)),
-        ChartModel(time: "T12", value: Random().nextInt(10000000)),
+        ChartModel(time: "T1", value: 40000, color: Colors.green.shade300),
+        ChartModel(time: "T2", value: 50000),
+        ChartModel(time: "T3", value: 10000),
+        ChartModel(time: "T4", value: 20000),
+        ChartModel(time: "T5", value: 60000),
+        ChartModel(time: "T6", value: 90000),
+        ChartModel(time: "T7", value: 40000),
       ],
-      // [
-      //   ChartModel(
-      //       time: "T1",
-      //       value: Random().nextInt(100000000),
-      //       color: Colors.red.shade300),
-      //   ChartModel(time: "T2", value: Random().nextInt(100000000)),
-      //   ChartModel(time: "T3", value: Random().nextInt(100000000)),
-      //   ChartModel(time: "T4", value: Random().nextInt(100000000)),
-      //   ChartModel(time: "T5", value: Random().nextInt(100000000)),
-      //   ChartModel(time: "T6", value: Random().nextInt(100000000)),
-      //   ChartModel(time: "T7", value: Random().nextInt(100000000)),
-      //   ChartModel(time: "T8", value: Random().nextInt(100000000)),
-      //   ChartModel(time: "T9", value: Random().nextInt(100000000)),
-      //   ChartModel(time: "T10", value: Random().nextInt(100000000)),
-      //   ChartModel(time: "T11", value: Random().nextInt(100000000)),
-      //   ChartModel(time: "T12", value: Random().nextInt(100000000)),
-      // ],
+      [
+        ChartModel(time: "T1", value: 60000, color: Colors.red.shade300),
+        ChartModel(time: "T2", value: 80000),
+        ChartModel(time: "T3", value: 50000),
+        ChartModel(time: "T4", value: 40000),
+        ChartModel(time: "T5", value: 60000),
+        ChartModel(time: "T6", value: 60000),
+        ChartModel(time: "T7", value: 50000),
+      ],
     ];
 
     return Scaffold(
@@ -57,7 +41,7 @@ class _AnalysisDetailScreenState extends State<AnalysisDetailScreen> {
         children: [
           ChartsLine(
             height: 300,
-            colorSelect: Colors.yellow,
+            colorSelect: Colors.grey,
             onTap: (index) {
               // todayMoney = listData[1][index].value;
               // tomorrowMoney = listData[0][index].value;
