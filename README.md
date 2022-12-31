@@ -1,7 +1,5 @@
 # flutter-money-management
 
-# screen
-
 <p float="left">
 <img src="./docs/images/image1.png" width="200">
 <img src="./docs/images/image2.png" width="200">
