@@ -12,11 +12,13 @@ import 'package:money_management/pages/analysis/charts/line_chart/chart_line.dar
 import 'package:money_management/utils/format_utils.dart';
 import 'package:money_management/utils/navigator_utils.dart';
 import 'package:money_management/widgets/appbar/base_appbar.dart';
+import 'dart:math' as math;
 
 import 'charts/pie_chart/pie_chart_view.dart';
 
 part './views/analysis_collect_view.dart';
 part './views/analysis_pay_view.dart';
+part './views/hearder_view.dart';
 part 'analysis_detail_screen.dart';
 part 'analysis_screen.dart';
 
