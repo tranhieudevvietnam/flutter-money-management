@@ -53,7 +53,7 @@ class AnimatedItem extends AnimatedWidget {
 
 class AnimationMore extends AnimatedWidget {
   AnimationMore({super.key, required super.listenable});
-  final _transformTween = Tween<double>(begin: 180, end: 0);
+  final _transformTween = Tween<double>(begin: 0, end: 180);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,18 @@ class AnimationMore extends AnimatedWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
       children: [
+        Text(
+          textAlign: TextAlign.start,
+          _transformTween.evaluate(animation) == 180
+              ? "Thu gọn"
+              : "Xem thống kê",
+          style: const TextStyle(
+            fontSize: 14,
+            color: ColorConst.primary,
+          ),
+        ),
         Transform.rotate(
             angle: _transformTween.evaluate(animation) * math.pi / 180,
             child: const Icon(
@@ -69,13 +80,6 @@ class AnimationMore extends AnimatedWidget {
               color: ColorConst.primary,
               size: 20,
             )),
-        Text(
-          _transformTween.evaluate(animation) == 180 ? "Xem thêm" : "Thu gọn",
-          style: const TextStyle(
-            fontSize: 12,
-            color: ColorConst.primary,
-          ),
-        )
       ],
     );
   }
@@ -93,11 +97,7 @@ class HeaderView extends StatefulWidget {
 class _HeaderViewState extends State<HeaderView>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation1;
-  late Animation<double> animation2;
-  late Animation<double> animation3;
   late AnimationController controller1;
-  // late AnimationController controller2;
-  // late AnimationController controller3;
 
   AnimationStatus? status;
 
@@ -123,6 +123,53 @@ class _HeaderViewState extends State<HeaderView>
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () async {
+                    final result =
+                        await DateTimeUtils.instant.datePicker(context);
+                    debugPrint("data time picker result -> $result");
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.calendar_month_outlined,
+                            color: ColorConst.primary),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                            FormatUtils.instant.dateTimeConvertString(
+                                date: DateTime.now(), type: "dd/MM/yyyy"),
+                            style: const TextStyle(fontSize: 16)),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                child: Center(
+                    child: Text(
+                  "1 Tuần",
+                  style: TextStyle(fontSize: 16),
+                )),
+              ),
+              GestureDetector(
+                onTap: () {
+                  if (status == AnimationStatus.completed) {
+                    controller1.reverse();
+                  } else if (status == AnimationStatus.dismissed) {
+                    controller1.forward();
+                  }
+                },
+                child: AnimationMore(listenable: animation1),
+              )
+            ],
+          ),
           AnimatedItem(
             animation: animation1,
             money: widget.sumPay,
@@ -141,16 +188,6 @@ class _HeaderViewState extends State<HeaderView>
             title: "Surplus: ",
             color: ColorConst.text,
           ),
-          GestureDetector(
-            onTap: () {
-              if (status == AnimationStatus.completed) {
-                controller1.reverse();
-              } else if (status == AnimationStatus.dismissed) {
-                controller1.forward();
-              }
-            },
-            child: AnimationMore(listenable: animation1),
-          )
         ],
       ),
     );
