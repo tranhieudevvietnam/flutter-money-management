@@ -1,0 +1,7 @@
+{
+  "helloWorld": "Hello World!",
+  "success": "Success",
+  "failure": "Failure",
+  "payMoney": "Pay money",
+  "collectMoney": "Collect money"
+}

@@ -7,6 +7,10 @@ import 'package:path_provider/path_provider.dart';
 
 import 'pages/route_export.dart';
 
+// #docregion AppLocalizationsImport
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// #enddocregion AppLocalizationsImport
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
@@ -39,7 +43,7 @@ class _AppConfigState extends State<AppConfig> {
 
     return const MaterialApp(
       initialRoute: '/',
-
+      // locale: Locale('vi'),
       // initialRoute: NavigationScreen.routeName,
       onGenerateRoute: generateRoute,
       supportedLocales: [
@@ -49,6 +53,7 @@ class _AppConfigState extends State<AppConfig> {
         // Locale(SupportedLanguages.english, 'US'),
       ],
       localizationsDelegates: [
+        AppLocalizations.delegate, // Add this line
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

@@ -50,7 +50,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
                   create: (context) => CategoryInputBloc(),
-                  child:  CategoryInputScreen(),
+                  child:  const CategoryInputScreen(),
                 ),
             settings: settings);
       }

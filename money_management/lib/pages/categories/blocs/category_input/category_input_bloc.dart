@@ -11,7 +11,7 @@ part 'category_input_event.dart';
 part 'category_input_state.dart';
 
 class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
-  CategoryInputBloc() : super(CategoryInputInitial()) {
+  CategoryInputBloc() : super(const CategoryInputInitial()) {
     on<CategoryCreateEvent>(_onCategoryCreateEvent);
     on<CategoryCreateSubCategoryEvent>(_onCategoryCreateSubCategoryEvent);
     on<CategoryDeleteEvent>(_onCategoryDeleteEvent);
@@ -57,7 +57,7 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
         emit(CategoryInputCreateFailure(message: result.message));
       }
     } else {
-      emit(CategoryInputCreateFailure(message: "Error ^_^"));
+      emit(const CategoryInputCreateFailure(message: "Error ^_^"));
     }
   }
 
@@ -65,7 +65,6 @@ class CategoryInputBloc extends Bloc<CategoryInputEvent, CategoryInputState> {
       CategoryDeleteEvent event, Emitter<CategoryInputState> emit) async {
     final result = await useCase.delete(value: event.dataInput);
     if (result.success == true) {
-
       emit(CategoryChangeSuccess(message: result.message));
     } else {
       emit(CategoryChangeFailure(message: result.message));

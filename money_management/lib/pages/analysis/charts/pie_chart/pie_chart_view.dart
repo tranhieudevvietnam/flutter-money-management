@@ -6,6 +6,7 @@ import 'package:money_management/domain/moneys/entities/money_type.dart';
 import 'pie_chart_data.dart';
 import 'pie_chart_paint.dart';
 
+// ignore: must_be_immutable
 class PieChartView extends StatefulWidget {
   List<MoneyModel> listData;
   final MoneyType moneyType;

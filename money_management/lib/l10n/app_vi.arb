@@ -1,0 +1,12 @@
+{
+    "helloWorld": "Xin chào!",
+    "@helloWorld": {
+      "description": "The conventional newborn programmer greeting"
+    },
+    "success":"Thành công",
+    "failure":"Thất bại",
+    "payMoney": "Chi tiền",
+    "collectMoney": "Thu tiền"
+
+
+}

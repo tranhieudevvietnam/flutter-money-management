@@ -53,7 +53,7 @@ class _ChartsLineState extends State<ChartsLine> {
             });
           },
           onPointerDown: (event) {
-            print("posision: ${event.position}");
+            // print("posision: ${event.position}");
             setState(() {
               position = event.position;
             });
@@ -173,7 +173,7 @@ class MyCustomPaint extends CustomPainter {
         ..color = item.first.color
         ..strokeWidth = 3;
 
-      Path pathBelow = Path();
+      // Path pathBelow = Path();
       for (int i = 0; (i + 1) < listOffset.length; i++) {
         canvas.drawLine(listOffset[i], listOffset[i + 1], paint2);
       }

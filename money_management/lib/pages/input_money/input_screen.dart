@@ -67,12 +67,12 @@ class _InputScreenState extends State<InputScreen>
                       labelStyle: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                       unselectedLabelColor: Colors.white,
-                      tabs: const [
+                      tabs: [
                         Tab(
-                          text: 'Pay',
+                          text: AppLocalizations.of(context)!.payMoney,
                         ),
                         Tab(
-                          text: 'Collect',
+                          text: AppLocalizations.of(context)!.collectMoney,
                         ),
                       ],
                     );
