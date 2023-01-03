@@ -16,20 +16,21 @@ class MoneyModel {
   @HiveField(1, defaultValue: 0)
   late num money;
   @HiveField(2)
-  DateTime? createDated;
+  DateTime createDated;
   @HiveField(3)
-  CategoryModel? category;
+  CategoryModel category;
   @HiveField(4)
   String? note;
   @HiveField(5)
   MoneyType? moneyType;
 
+  DateTime? startDate;
 
   MoneyModel(
       {this.moneyType,
-      this.category,
+      required this.category,
       this.note,
-      this.createDated,
+      required this.createDated,
       this.money = 0}) {
     id = Random().nextInt(DataConst.valueRandom);
   }

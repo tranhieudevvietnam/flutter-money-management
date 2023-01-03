@@ -221,22 +221,31 @@ class _InputViewState extends State<InputView> {
                           valueListenable: dateTimeNotifier,
                           builder: (context, value, child) {
                             return GestureDetector(
-                              onTap: () {
-                                showMaterialDatePicker(
-                                  context: context,
-                                  selectedDate: dateTimeNotifier.value,
-                                  onChanged: (value) {
-                                    dateTimeNotifier.value = value;
-                                  },
-                                  firstDate:
-                                      DateTime.now().add(Duration(days: -365)),
-                                  lastDate:
-                                      DateTime.now().add(Duration(days: 365)),
-                                );
+                              onTap: () async {
+                                final dateResult = await DateTimeUtils.instant
+                                    .datePicker(context,
+                                        dateTimeCurrent:
+                                            dateTimeNotifier.value);
+                                if (dateResult != null) {
+                                  dateTimeNotifier.value = dateResult;
+                                }
+                                // showMaterialDatePicker(
+                                //   context: context,
+                                //   selectedDate: dateTimeNotifier.value,
+                                //   title: "Select date",
+                                //   onChanged: (value) {
+                                //     dateTimeNotifier.value = value;
+                                //   },
+                                //   firstDate:
+                                //       DateTime.now().add(Duration(days: -365)),
+                                //   lastDate:
+                                //       DateTime.now().add(Duration(days: 365)),
+                                // );
                               },
                               child: Text(
-                                "${FormatUtils.instant.dateTimeConvertString(date: value, type: "dd/MM/yyyy")}",
-                                style: TextStyle(fontSize: 14),
+                                // "${FormatUtils.instant.dateTimeConvertString(date: value, type: "dd/MM/yyyy")}",
+                                "${value.dateTimeConvertString(type: "dd/MM/yyyy")}",
+                                style: const TextStyle(fontSize: 14),
                               ),
                             );
                           },
@@ -246,24 +255,24 @@ class _InputViewState extends State<InputView> {
                         valueListenable: dateTimeNotifier,
                         builder: (context, value, child) {
                           return GestureDetector(
-                            onTap: () {
-                              var time = TimeOfDay.now();
-                              showMaterialTimePicker(
-                                context: context,
-                                selectedTime: time,
-                                onChanged: (value) {
-                                  final dateTimeTemp = dateTimeNotifier.value;
-                                  dateTimeNotifier.value = DateTime(
-                                      dateTimeTemp.year,
-                                      dateTimeTemp.month,
-                                      dateTimeTemp.day,
-                                      value.hour,
-                                      value.minute);
-                                },
-                              );
+                            onTap: () async {
+                              final timeResult = await DateTimeUtils.instant
+                                  .timePicker(context,
+                                      timeCurrent: TimeOfDay(
+                                          hour: dateTimeNotifier.value.hour,
+                                          minute:
+                                              dateTimeNotifier.value.minute));
+                              if (timeResult != null) {
+                                dateTimeNotifier.value = DateTime(
+                                    value.year,
+                                    value.month,
+                                    value.day,
+                                    timeResult.hour,
+                                    timeResult.minute);
+                              }
                             },
                             child: Text(
-                              "${FormatUtils.instant.dateTimeConvertString(date: value, type: "HH:mm")}",
+                              "${value.dateTimeConvertString(type: "HH:mm")}",
                               style: const TextStyle(fontSize: 14),
                             ),
                           );

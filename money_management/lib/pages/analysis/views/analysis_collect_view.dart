@@ -65,7 +65,7 @@ class AnalysisCollectView extends StatelessWidget {
                                               BorderRadius.circular(100)),
                                       child: Icon(
                                         getIconByKey(listDataView[index]
-                                            .category!
+                                            .category
                                             .icon!),
                                         color: listDataView[index].color!,
                                       )),
@@ -74,7 +74,7 @@ class AnalysisCollectView extends StatelessWidget {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    "${listDataView[index].category?.name}",
+                                    "${listDataView[index].category.name}",
                                     style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,

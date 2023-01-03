@@ -13,7 +13,7 @@ class _AnalysisScreenState extends State<AnalysisScreen>
 
   ValueNotifier<int> tabCurrentIndex = ValueNotifier<int>(0);
 
-  late AnalysisBloc bloc;
+  // late AnalysisBloc bloc;
 
   @override
   void initState() {
@@ -22,8 +22,7 @@ class _AnalysisScreenState extends State<AnalysisScreen>
       tabCurrentIndex.value = _tabController.index;
     });
 
-    bloc = BlocProvider.of<AnalysisBloc>(context);
-    bloc.add(AnalysisInitEvent());
+    // bloc = BlocProvider.of<AnalysisBloc>(context);
     super.initState();
   }
 

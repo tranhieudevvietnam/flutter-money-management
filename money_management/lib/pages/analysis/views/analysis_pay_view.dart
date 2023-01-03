@@ -47,7 +47,7 @@ class AnalysisPayView extends StatelessWidget {
                                       ? listData[index].color!
                                       : ColorConst.border)),
                           child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
                                     padding: const EdgeInsets.all(5),
@@ -58,19 +58,31 @@ class AnalysisPayView extends StatelessWidget {
                                             BorderRadius.circular(100)),
                                     child: Icon(
                                       getIconByKey(
-                                          listData[index].category!.icon!),
+                                          listData[index].category.icon!),
                                       color: listData[index].color!,
                                     )),
                                 const SizedBox(
                                   width: 10,
                                 ),
                                 Expanded(
-                                    child: Text(
-                                  "${listData[index].category?.name}",
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: ColorConst.text),
+                                    child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${listData[index].category.name}",
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: ColorConst.text),
+                                    ),
+                                    Text(
+                                      "${listData[index].startDate?.dateTimeConvertString(type: "dd/MM/yyyy") ?? "N/A"} - ${listData[index].createDated.dateTimeConvertString(type: "dd/MM/yyyy")}",
+                                      style: const TextStyle(
+                                          height: 1.5,
+                                          fontSize: 12,
+                                          color: ColorConst.text),
+                                    ),
+                                  ],
                                 )),
                                 Text(
                                   "- ${FormatUtils.instant.moneyFormat(money: listData[index].money)}",

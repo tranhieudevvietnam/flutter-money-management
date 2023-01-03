@@ -101,9 +101,28 @@ class _HeaderViewState extends State<HeaderView>
 
   AnimationStatus? status;
 
+  List<GroupDateTimeModel> listGroupDateTime = [];
+  GroupDateTimeModel? groupDateSelected;
+  late AnalysisBloc bloc;
+  ValueNotifier<DateTime> dateSelected = ValueNotifier(DateTime.now());
+
   @override
   void initState() {
     super.initState();
+
+    bloc = BlocProvider.of<AnalysisBloc>(context);
+
+    listGroupDateTime = [
+      GroupDateTimeModel(title: "1 Tuần", valueDay: 7),
+      GroupDateTimeModel(title: "2 Tuần", valueDay: 14),
+      GroupDateTimeModel(title: "3 Tuần", valueDay: 21),
+      GroupDateTimeModel(
+          title: "1 Tháng", valueDay: DateTime.now().daysInMonth),
+    ];
+    groupDateSelected = listGroupDateTime.last;
+    bloc.add(AnalysisInitEvent(
+        dateTime: dateSelected.value, day: groupDateSelected!.valueDay));
+
     controller1 = AnimationController(
         duration: const Duration(milliseconds: 500), vsync: this);
 
@@ -128,45 +147,81 @@ class _HeaderViewState extends State<HeaderView>
               Expanded(
                 child: GestureDetector(
                   onTap: () async {
-                    final result =
-                        await DateTimeUtils.instant.datePicker(context);
-                    debugPrint("data time picker result -> $result");
+                    final result = await DateTimeUtils.instant.datePicker(
+                        context,
+                        dateTimeCurrent: dateSelected.value);
+                    if (result != null) {
+                      dateSelected.value = result;
+                      bloc.add(AnalysisInitEvent(
+                          dateTime: dateSelected.value,
+                          day: groupDateSelected?.valueDay));
+                    }
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.calendar_month_outlined,
-                            color: ColorConst.primary),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                            FormatUtils.instant.dateTimeConvertString(
-                                date: DateTime.now(), type: "dd/MM/yyyy"),
-                            style: const TextStyle(fontSize: 16)),
-                      ],
+                    child: ValueListenableBuilder(
+                      valueListenable: dateSelected,
+                      builder: (context, value, child) {
+                        return Row(
+                          children: [
+                            const Icon(Icons.calendar_month_outlined,
+                                color: ColorConst.primary),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                                // FormatUtils.instant.dateTimeConvertString(
+                                //     date: dateSelected, type: "dd/MM/yyyy"),
+                                value.dateTimeConvertString(type: "dd/MM/yyyy"),
+                                style: const TextStyle(fontSize: 16)),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                child: Center(
-                    child: Text(
-                  "1 Tuần",
-                  style: TextStyle(fontSize: 16),
-                )),
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (status == AnimationStatus.completed) {
-                    controller1.reverse();
-                  } else if (status == AnimationStatus.dismissed) {
-                    controller1.forward();
-                  }
+              DropdownWidget(
+                listData: listGroupDateTime,
+                data: groupDateSelected,
+                onChange: (value) {
+                  groupDateSelected = value;
+                  bloc.add(AnalysisInitEvent(
+                      dateTime: dateSelected.value,
+                      day: groupDateSelected?.valueDay));
                 },
-                child: AnimationMore(listenable: animation1),
+                builderDropdownItem: (context, data) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        Text(
+                          data?.title ?? "N/A",
+                          style: const TextStyle(
+                              fontSize: 16, color: ColorConst.primary),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Icon(
+                          Icons.expand_more_outlined,
+                          color: ColorConst.primary,
+                          size: 20,
+                        )
+                      ],
+                    ),
+                  );
+                },
+                builderDropdownItemMenu: (context, data) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      data?.title ?? "N/A",
+                      style: const TextStyle(
+                          fontSize: 16, color: ColorConst.primary),
+                    ),
+                  );
+                },
               )
             ],
           ),
@@ -188,6 +243,16 @@ class _HeaderViewState extends State<HeaderView>
             title: "Surplus: ",
             color: ColorConst.text,
           ),
+          GestureDetector(
+            onTap: () {
+              if (status == AnimationStatus.completed) {
+                controller1.reverse();
+              } else if (status == AnimationStatus.dismissed) {
+                controller1.forward();
+              }
+            },
+            child: AnimationMore(listenable: animation1),
+          )
         ],
       ),
     );
