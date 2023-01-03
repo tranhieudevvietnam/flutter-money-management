@@ -16,9 +16,9 @@ class MoneyModel {
   @HiveField(1, defaultValue: 0)
   late num money;
   @HiveField(2)
-  DateTime createDated;
+  late DateTime createDated;
   @HiveField(3)
-  CategoryModel category;
+  late CategoryModel category;
   @HiveField(4)
   String? note;
   @HiveField(5)
@@ -27,14 +27,25 @@ class MoneyModel {
   DateTime? startDate;
 
   MoneyModel(
-      {this.moneyType,
+      {int? idMoney,
+      this.moneyType,
       required this.category,
       this.note,
       required this.createDated,
       this.money = 0}) {
-    id = Random().nextInt(DataConst.valueRandom);
+    id = idMoney ?? Random().nextInt(DataConst.valueRandom);
   }
 
   num? percent;
   Color? color;
+
+ static copyWith({required MoneyModel data}) {
+    return MoneyModel(
+        idMoney: data.id,
+        category: data.category,
+        createDated: data.createDated,
+        money: data.money,
+        moneyType: data.moneyType,
+        note: data.note);
+  }
 }

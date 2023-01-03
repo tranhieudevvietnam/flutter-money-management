@@ -113,7 +113,7 @@ class MoneyRepository extends IMoneyRepository {
         if (index >= 0) {
           listData3[index].money += item.money;
         } else {
-          listData3.add(item);
+          listData3.add(MoneyModel.copyWith(data: item));
         }
       }
 
