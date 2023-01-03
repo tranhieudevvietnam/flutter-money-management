@@ -20,3 +20,4 @@ doc/api/
 *.js.deps
 *.js.map
 *.g.dart
+money_management/ios/Podfile.lock
