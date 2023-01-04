@@ -76,7 +76,8 @@ class AnalysisPayView extends StatelessWidget {
                                           color: ColorConst.text),
                                     ),
                                     Text(
-                                      "${listData[index].startDate?.dateTimeConvertString(type: "dd/MM/yyyy") ?? "N/A"} - ${listData[index].createDated.dateTimeConvertString(type: "dd/MM/yyyy")}",
+                                      "${listData[index].startDate?.dateTimeConvertString(type: "dd/MM/yyyy") ?? "N/A"} "
+                                      "- ${listData[index].createDated.dateTimeConvertString(type: "dd/MM/yyyy")}",
                                       style: const TextStyle(
                                           height: 1.5,
                                           fontSize: 12,

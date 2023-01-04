@@ -35,7 +35,7 @@ void customToastUtils(
           ),
         ),
         gravity: ToastGravity.CENTER,
-        toastDuration: const Duration(seconds: 4),
+        toastDuration: const Duration(seconds: 2),
       );
 }
 

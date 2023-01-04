@@ -8,6 +8,7 @@ import '../domain/moneys/entities/money_model.dart';
 class HiveUtil {
   static late Box<List<dynamic>> boxCategories;
   static late Box<List<dynamic>> boxMoney;
+  static late Box<dynamic> boxLocal;
 
   static init() async {
     // Register Adapter
@@ -15,6 +16,7 @@ class HiveUtil {
     // Open box
     boxCategories = await Hive.openBox(HiveConstant.categories);
     boxMoney = await Hive.openBox(HiveConstant.collectMoney);
+    boxLocal = await Hive.openBox("myBox");
   }
 
   // Register Adapter

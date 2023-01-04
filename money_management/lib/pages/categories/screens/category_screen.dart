@@ -23,7 +23,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BasicAppBar("Categories", actions: [
+      appBar: BasicAppBar(AppLocalizations.of(context)!.categories, actions: [
         GestureDetector(
           onTap: () async {
             final result = await NavigatorUtil.push(
@@ -49,7 +49,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             categoryBloc.add(CategoryGetAllEvent());
             showMyDiaLog(
                 context: context,
-                title: "Success",
+                title: AppLocalizations.of(context)!.success,
                 message: stateInput.message!);
           }
         },

@@ -46,12 +46,14 @@ class _CategoryInputScreenState extends State<CategoryInputScreen> {
         }
         if (state is CategoryInputCreateFailure) {
           showMyDiaLog(
-              context: context, title: "Error", message: state.message!);
+              context: context,
+              title: AppLocalizations.of(context)!.error,
+              message: state.message!);
           return;
         }
       },
       child: Scaffold(
-        appBar: const BasicAppBar("Input category"),
+        appBar: BasicAppBar(AppLocalizations.of(context)!.addCategory),
         body: SafeArea(
             child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -93,9 +95,9 @@ class _CategoryInputScreenState extends State<CategoryInputScreen> {
                               iconData.values.first,
                               size: 30,
                             ),
-                            const Text(
-                              "Select icon",
-                              style: TextStyle(
+                            Text(
+                              "${AppLocalizations.of(context)!.select} icon",
+                              style: const TextStyle(
                                   fontSize: 10, fontStyle: FontStyle.italic),
                             )
                           ],
@@ -108,10 +110,11 @@ class _CategoryInputScreenState extends State<CategoryInputScreen> {
                     Expanded(
                       child: TextField(
                         controller: categoryInput,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintStyle: TextStyle(fontSize: 14),
-                            hintText: "Enter name category.."),
+                            hintStyle: const TextStyle(fontSize: 14),
+                            hintText:
+                                "${AppLocalizations.of(context)!.category}..."),
                       ),
                     ),
                   ],
@@ -125,17 +128,17 @@ class _CategoryInputScreenState extends State<CategoryInputScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    Icon(
+                  children: [
+                    const Icon(
                       Icons.note_alt_outlined,
                       size: 30,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      "Note:",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      "${AppLocalizations.of(context)!.note}:",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -149,10 +152,11 @@ class _CategoryInputScreenState extends State<CategoryInputScreen> {
                   controller: noteInput,
                   maxLines: 5,
                   minLines: 5,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintStyle: TextStyle(fontSize: 14, color: Colors.grey),
-                      hintText: "Enter note..."),
+                      hintStyle:
+                          const TextStyle(fontSize: 14, color: Colors.grey),
+                      hintText: "${AppLocalizations.of(context)!.note}..."),
                 ),
               ),
               const SizedBox(
@@ -179,12 +183,13 @@ class _CategoryInputScreenState extends State<CategoryInputScreen> {
                     if (categoryInput.text.isEmpty == true) {
                       showMyDiaLog(
                           context: context,
-                          title: "Warning",
-                          message: "Please enter category name");
+                          title: AppLocalizations.of(context)!.warning,
+                          message: AppLocalizations.of(context)!
+                              .messagePleaseEnterCategoryName);
                     } else {
                       if (widget.data != null) {
                         inputBloc.add(CategoryCreateSubCategoryEvent(
-                          parentId: widget.data!.id,
+                            parentId: widget.data!.id,
                             data: widget.data!,
                             categoryName: categoryInput.text,
                             note: noteInput.text,

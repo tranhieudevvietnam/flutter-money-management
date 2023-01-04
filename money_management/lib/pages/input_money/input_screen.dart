@@ -69,10 +69,10 @@ class _InputScreenState extends State<InputScreen>
                       unselectedLabelColor: Colors.white,
                       tabs: [
                         Tab(
-                          text: AppLocalizations.of(context)!.payMoney,
+                          text: AppLocalizations.of(context)!.spending,
                         ),
                         Tab(
-                          text: AppLocalizations.of(context)!.collectMoney,
+                          text: AppLocalizations.of(context)!.income,
                         ),
                       ],
                     );

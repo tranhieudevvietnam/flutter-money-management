@@ -102,7 +102,7 @@ class _InputViewState extends State<InputView> {
                       border:
                           Border(left: BorderSide(color: ColorConst.border))),
                   child: Text(
-                    "VND",
+                    "VNĐ",
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -148,10 +148,10 @@ class _InputViewState extends State<InputView> {
                                   const SizedBox(
                                     width: 16,
                                   ),
-                                  const Expanded(
+                                  Expanded(
                                     child: Text(
-                                      "Categories....",
-                                      style: TextStyle(
+                                      "${AppLocalizations.of(context)!.category}...",
+                                      style: const TextStyle(
                                           color: ColorConst.hintText,
                                           fontSize: 14),
                                     ),
@@ -186,12 +186,12 @@ class _InputViewState extends State<InputView> {
                   ),
                   const Divider(),
                   Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Icons.note_alt_outlined,
                         size: 30,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
                       Expanded(
@@ -199,9 +199,10 @@ class _InputViewState extends State<InputView> {
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             isDense: true,
-                            hintStyle:
-                                TextStyle(fontSize: 14, color: Colors.grey),
-                            hintText: "Enter note..."),
+                            hintStyle: const TextStyle(
+                                fontSize: 14, color: Colors.grey),
+                            hintText:
+                                "${AppLocalizations.of(context)!.note}..."),
                       )),
                     ],
                   ),
@@ -310,10 +311,13 @@ class _InputViewState extends State<InputView> {
                   color: ColorConst.primary,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: ColorConst.primary)),
-              child: const Center(
+              child: Center(
                   child: Text(
-                "Save",
-                style: TextStyle(color: Colors.white),
+                AppLocalizations.of(context)!.save,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
               )),
             ),
           )

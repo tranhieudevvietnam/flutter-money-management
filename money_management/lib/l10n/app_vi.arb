@@ -5,8 +5,35 @@
     },
     "success":"Thành công",
     "failure":"Thất bại",
-    "payMoney": "Chi tiền",
-    "collectMoney": "Thu tiền"
+    "error":"Lỗi",
+    "warning": "Cảnh báo",
+    "select":"Chọn",
+    "spending": "Chi tiêu",
+    "time": "Thời gian",
+    "continueText":"Tiếp tục",
+    "income": "Thu nhập",
+    "input": "Đầu vào",
+    "analysis": "Phân tích",
+    "calendar": "Lịch",
+    "languageTitle": "Ngôn ngữ",
+    "vietName": "Việt Nam",
+    "english": "Anh",
+    "cleanAllData": "Xoá hết dữ liệu",
+    "setting": "Cài đặt",
+    "functionsInDevelopment": "Tính năng đang được phát triển",
+    "messagePleaseEnterCategoryName": "Vui lòng nhập tên danh mục",
+    "save": "Lưu",
+    "category": "Danh mục",
+    "categories": "Danh sách danh mục",
+    "addCategory":"Thêm danh mục",
+    "note": "Ghi chú",
+    "month": "Tháng",
+    "week": "Tuần",
+    "surplus": "Số dư",
+    "close":"Đóng",
+    "seeStatistics": "Xem thống kê"
+
+
 
 
 }

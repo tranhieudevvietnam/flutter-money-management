@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:money_management/constants/color_constant.dart';
 import 'package:money_management/constants/material.dart';
 import 'package:money_management/domain/categories/entities/group_datetime_model.dart';
@@ -16,6 +13,7 @@ import 'package:money_management/utils/navigator_utils.dart';
 import 'package:money_management/widgets/appbar/base_appbar.dart';
 import 'package:money_management/widgets/dropbox_widget.dart';
 import 'dart:math' as math;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'charts/pie_chart/pie_chart_view.dart';
 

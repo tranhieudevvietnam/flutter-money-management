@@ -37,7 +37,7 @@ class MoneyRepository extends IMoneyRepository {
       final listOld =
           HiveUtil.boxMoney.get(HiveKeyConstant.payMoney, defaultValue: []);
       final dataOld = listOld?.firstWhereOrNull((element) {
-        if (element.category!.id == value.category.id &&
+        if (element.category.id == value.category.id &&
             DateTime(element.createDated.year, element.createDated.month,
                         element.createDated.day)
                     .difference(DateTime(value.createDated.year,

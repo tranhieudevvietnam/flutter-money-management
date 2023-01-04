@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive/hive.dart';
+import 'package:money_management/hives/hive_constant.dart';
 import 'package:money_management/hives/hive_utils.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'pages/route_export.dart';
+import 'pages/setting/bloc/setting_bloc.dart';
 
 // #docregion AppLocalizationsImport
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,7 +20,10 @@ Future<void> main() async {
   Hive.init(appDocumentDirectory.path);
   await HiveUtil.init();
 
-  runApp(const AppConfig());
+  runApp(BlocProvider(
+    create: (context) => SettingBloc(),
+    child: const AppConfig(),
+  ));
 }
 
 class AppConfig extends StatefulWidget {
@@ -41,23 +47,35 @@ class _AppConfigState extends State<AppConfig> {
   Widget build(BuildContext context) {
     contextAppConfig = context;
 
-    return const MaterialApp(
-      initialRoute: '/',
-      // locale: Locale('vi'),
-      // initialRoute: NavigationScreen.routeName,
-      onGenerateRoute: generateRoute,
-      supportedLocales: [
-        Locale('en'), // English
-        Locale('vi'), // VietNam
-        // Locale(SupportedLanguages.vietnamese, ''),
-        // Locale(SupportedLanguages.english, 'US'),
-      ],
-      localizationsDelegates: [
-        AppLocalizations.delegate, // Add this line
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+    return BlocBuilder<SettingBloc, SettingState>(
+      buildWhen: (previous, current) => current is SettingChangeLanguage,
+      builder: (context, state) {
+        SettingChangeLanguage stateLanguage;
+        if (state is SettingChangeLanguage) {
+          stateLanguage = state;
+        } else {
+          final local = HiveUtil.boxLocal.get(HiveKeyConstant.language);
+          stateLanguage = SettingChangeLanguage(Locale(local ?? "vi"));
+        }
+        return MaterialApp(
+          initialRoute: '/',
+          locale: stateLanguage.locale,
+          // initialRoute: NavigationScreen.routeName,
+          onGenerateRoute: generateRoute,
+          supportedLocales: const [
+            Locale('en'), // English
+            Locale('vi'), // VietNam
+            // Locale(SupportedLanguages.vietnamese, ''),
+            // Locale(SupportedLanguages.english, 'US'),
+          ],
+          localizationsDelegates: const [
+            AppLocalizations.delegate, // Add this line
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+        );
+      },
     );
   }
 }

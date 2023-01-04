@@ -9,6 +9,7 @@ import 'package:money_management/utils/custom_toast_utils.dart';
 import 'package:money_management/utils/navigator_utils.dart';
 import 'package:money_management/widgets/appbar/base_appbar.dart';
 import 'package:money_management/widgets/loading_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'blocs/category_input/category_input_bloc.dart';
 

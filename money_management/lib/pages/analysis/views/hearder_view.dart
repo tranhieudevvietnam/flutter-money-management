@@ -13,8 +13,8 @@ class AnimatedItem extends AnimatedWidget {
       : super(listenable: animation);
 
   // Make the Tweens static because they don't change.
-  static final _sizeTween = Tween<double>(begin: 0, end: 30);
-  static final _heightTween = Tween<double>(begin: 0, end: 40);
+  static final _sizeTween = Tween<double>(begin: 0, end: 25);
+  static final _heightTween = Tween<double>(begin: 0, end: 30);
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +66,8 @@ class AnimationMore extends AnimatedWidget {
         Text(
           textAlign: TextAlign.start,
           _transformTween.evaluate(animation) == 180
-              ? "Thu gọn"
-              : "Xem thống kê",
+              ? AppLocalizations.of(context)!.close
+              : AppLocalizations.of(context)!.seeStatistics,
           style: const TextStyle(
             fontSize: 14,
             color: ColorConst.primary,
@@ -88,7 +88,12 @@ class AnimationMore extends AnimatedWidget {
 class HeaderView extends StatefulWidget {
   final num sumPay;
   final num sumCollect;
-  const HeaderView({super.key, required this.sumPay, required this.sumCollect});
+  final BuildContext contextParent;
+  const HeaderView(
+      {super.key,
+      required this.contextParent,
+      required this.sumPay,
+      required this.sumCollect});
 
   @override
   State<HeaderView> createState() => _HeaderViewState();
@@ -113,11 +118,18 @@ class _HeaderViewState extends State<HeaderView>
     bloc = BlocProvider.of<AnalysisBloc>(context);
 
     listGroupDateTime = [
-      GroupDateTimeModel(title: "1 Tuần", valueDay: 7),
-      GroupDateTimeModel(title: "2 Tuần", valueDay: 14),
-      GroupDateTimeModel(title: "3 Tuần", valueDay: 21),
       GroupDateTimeModel(
-          title: "1 Tháng", valueDay: DateTime.now().daysInMonth),
+          title: "1 ${AppLocalizations.of(widget.contextParent)!.week}",
+          valueDay: 7),
+      GroupDateTimeModel(
+          title: "2 ${AppLocalizations.of(widget.contextParent)!.week}",
+          valueDay: 14),
+      GroupDateTimeModel(
+          title: "3 ${AppLocalizations.of(widget.contextParent)!.week}",
+          valueDay: 21),
+      GroupDateTimeModel(
+          title: "1 ${AppLocalizations.of(widget.contextParent)!.month}",
+          valueDay: DateTime.now().daysInMonth),
     ];
     groupDateSelected = listGroupDateTime.last;
     bloc.add(AnalysisInitEvent(
@@ -228,19 +240,19 @@ class _HeaderViewState extends State<HeaderView>
           AnimatedItem(
             animation: animation1,
             money: widget.sumPay,
-            title: "Spending: ",
+            title: "${AppLocalizations.of(context)!.spending}: ",
             color: ColorConst.error,
           ),
           AnimatedItem(
             animation: animation1,
             money: widget.sumCollect,
-            title: "Income: ",
+            title: "${AppLocalizations.of(context)!.income}: ",
             color: ColorConst.success,
           ),
           AnimatedItem(
             animation: animation1,
             money: widget.sumCollect - widget.sumPay,
-            title: "Surplus: ",
+            title: "${AppLocalizations.of(context)!.surplus}: ",
             color: ColorConst.text,
           ),
           GestureDetector(

@@ -43,14 +43,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             builder: (context) => BlocProvider(
                   create: (context) => CategoryInputBloc(),
                   child: CategoryInputScreen(
-                      data: map["data"], edit: map["edit"] ?? false,dataParent: map["dataParent"]),
+                      data: map["data"],
+                      edit: map["edit"] ?? false,
+                      dataParent: map["dataParent"]),
                 ),
             settings: settings);
       } catch (error) {
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
                   create: (context) => CategoryInputBloc(),
-                  child:  const CategoryInputScreen(),
+                  child: const CategoryInputScreen(),
                 ),
             settings: settings);
       }
@@ -64,6 +66,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
           builder: (context) => const CategoryListIconScreen(),
           settings: settings);
+
+    case LanguageScreen.routeName:
+      // final map = settings.arguments as Map;
+      return MaterialPageRoute(
+          builder: (context) => const LanguageScreen(), settings: settings);
+          
     default:
       return MaterialPageRoute(
           builder: (context) => const HomeScreen(), settings: settings);

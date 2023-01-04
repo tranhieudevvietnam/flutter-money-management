@@ -68,12 +68,12 @@ class _AnalysisScreenState extends State<AnalysisScreen>
                     labelStyle: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.bold),
                     unselectedLabelColor: Colors.white,
-                    tabs: const [
+                    tabs: [
                       Tab(
-                        text: 'Pay',
+                        text: AppLocalizations.of(context)!.spending,
                       ),
                       Tab(
-                        text: 'Collect',
+                        text: AppLocalizations.of(context)!.income,
                       ),
                     ],
                   );
@@ -91,6 +91,7 @@ class _AnalysisScreenState extends State<AnalysisScreen>
                 data = state;
               }
               return HeaderView(
+                contextParent: context,
                 sumCollect: data?.sumCollect ?? 0,
                 sumPay: data?.sumPay ?? 0,
               );

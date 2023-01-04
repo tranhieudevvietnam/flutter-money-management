@@ -6,5 +6,6 @@ import 'categories/blocs/category/category_bloc.dart';
 import 'categories/blocs/category_input/category_input_bloc.dart';
 import 'categories/category_export.dart';
 import 'home/home_screen.dart';
+import 'setting/setting_export.dart';
 
 part 'route.dart';

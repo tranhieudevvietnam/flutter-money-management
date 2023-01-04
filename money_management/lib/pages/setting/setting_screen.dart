@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:money_management/constants/color_constant.dart';
-import 'package:money_management/models/setting_model.dart';
+part of './setting_export.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -10,17 +8,19 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  List<SettingModel> listSettings = [
-    SettingModel(title: "Language", iconData: Icons.language_outlined, key: 1),
-    SettingModel(
-        title: "Clean all data",
-        iconData: Icons.cleaning_services_outlined,
-        key: 2),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final padding = MediaQuery.of(context).padding;
+    List<SettingModel> listSettings = [
+      SettingModel(
+          title: AppLocalizations.of(context)!.languageTitle,
+          iconData: Icons.language_outlined,
+          key: 1),
+      SettingModel(
+          title: AppLocalizations.of(context)!.cleanAllData,
+          iconData: Icons.cleaning_services_outlined,
+          key: 2),
+    ];
     return Container(
       width: MediaQuery.of(context).size.width,
       color: Colors.white,
@@ -37,12 +37,12 @@ class _SettingScreenState extends State<SettingScreen> {
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30)),
             ),
-            child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Center(
                   child: Text(
-                    "Setting",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.setting,
+                    style: const TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
@@ -54,14 +54,34 @@ class _SettingScreenState extends State<SettingScreen> {
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               children: List.generate(
                   listSettings.length,
-                  (index) => itemSettingMethod(
-                      title: listSettings[index].title,
-                      iconData: listSettings[index].iconData)),
+                  (index) => GestureDetector(
+                        onTap: () {
+                          eventOnTap(listSettings[index].key);
+                        },
+                        child: itemSettingMethod(
+                            title: listSettings[index].title,
+                            iconData: listSettings[index].iconData),
+                      )),
             ),
           )
         ],
       ),
     );
+  }
+
+  eventOnTap(int value) {
+    switch (value) {
+      case 1:
+        NavigatorUtil.push(
+            routeName: LanguageScreen.routeName, context: context);
+        break;
+      case 2:
+        customToastUtils(context,
+            type: ToastType.fail,
+            msg: AppLocalizations.of(context)!.functionsInDevelopment);
+        break;
+      default:
+    }
   }
 
   Widget itemSettingMethod(

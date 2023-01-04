@@ -5,10 +5,11 @@ import 'package:money_management/constants/color_constant.dart';
 import 'package:money_management/pages/analysis/bloc/analysis_bloc.dart';
 import 'package:money_management/pages/calendar/bloc/calendar_bloc.dart';
 import 'package:money_management/pages/calendar/calendar_screen.dart';
-import 'package:money_management/pages/setting/setting_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../analysis/analysis_export.dart';
 import '../input_money/input_money_export.dart';
+import '../setting/setting_export.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = "/home/screen";
@@ -53,30 +54,31 @@ class _HomeScreenState extends State<HomeScreen> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_outlined, color: Colors.grey),
-            label: 'Input',
-            activeIcon: Icon(Icons.add_outlined, color: ColorConst.primary),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.equalizer_outlined, color: Colors.grey),
-            label: 'Analysis',
+            icon: const Icon(Icons.add_outlined, color: Colors.grey),
+            label: AppLocalizations.of(context)!.input,
             activeIcon:
-                Icon(Icons.equalizer_outlined, color: ColorConst.primary),
+                const Icon(Icons.add_outlined, color: ColorConst.primary),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.event_note, color: Colors.grey),
-            label: 'Calendar',
-            activeIcon: Icon(Icons.event_note, color: ColorConst.primary),
+            icon: const Icon(Icons.equalizer_outlined, color: Colors.grey),
+            label: AppLocalizations.of(context)!.analysis,
+            activeIcon:
+                const Icon(Icons.equalizer_outlined, color: ColorConst.primary),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(Icons.event_note, color: Colors.grey),
+            label: AppLocalizations.of(context)!.calendar,
+            activeIcon: const Icon(Icons.event_note, color: ColorConst.primary),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(
               Icons.settings,
               color: Colors.grey,
             ),
-            label: 'Setting',
-            activeIcon: Icon(Icons.settings, color: ColorConst.primary),
+            label: AppLocalizations.of(context)!.setting,
+            activeIcon: const Icon(Icons.settings, color: ColorConst.primary),
           ),
         ],
         currentIndex: _selectedIndex,
