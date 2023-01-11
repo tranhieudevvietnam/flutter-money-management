@@ -57,9 +57,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             settings: settings);
       }
     case AnalysisDetailScreen.routeName:
-      // final map = settings.arguments as Map;
+      final map = settings.arguments as Map;
       return MaterialPageRoute(
-          builder: (context) => const AnalysisDetailScreen(),
+          builder: (context) => BlocProvider.value(
+                value: map["bloc"] as AnalysisBloc,
+                child: AnalysisDetailScreen(moneyModel: map["moneyModel"]),
+              ),
           settings: settings);
     case CategoryListIconScreen.routeName:
       // final map = settings.arguments as Map;
@@ -71,7 +74,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       // final map = settings.arguments as Map;
       return MaterialPageRoute(
           builder: (context) => const LanguageScreen(), settings: settings);
-          
+
     default:
       return MaterialPageRoute(
           builder: (context) => const HomeScreen(), settings: settings);

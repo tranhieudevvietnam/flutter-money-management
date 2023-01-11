@@ -1,3 +1,4 @@
+import 'package:money_management/domain/moneys/entities/money_type.dart';
 import 'package:money_management/domain/moneys/repositories/i_repository.dart';
 import 'package:money_management/domain/result_basic.dart';
 import 'package:money_management/domain/moneys/entities/money_model.dart';
@@ -30,13 +31,36 @@ class MoneyUseCase {
     return ResultBasic(data: result, success: false);
   }
 
-  Future<ResultBasic<List<MoneyModel>>> getAllPay(
-      {String? search, DateTime? dateTime, int? day}) async {
+  Future<ResultBasic<List<MoneyModel>>> getAllPay({String? search}) async {
+    List<MoneyModel> result = [];
+    result = await repo.getAllPay(search: search);
+    return ResultBasic(data: result, success: true);
+  }
+
+  Future<ResultBasic<List<MoneyModel>>> getAllPayByDateTime(
+      {DateTime? dateTime, int? day}) async {
     List<MoneyModel> result = [];
     if (dateTime != null && day != null) {
-      result = await repo.getAllPayAnalysis(dateTime: dateTime, day: day);
-    } else {
-      result = await repo.getAllPay(search: search);
+      result = await repo.getAllPayAnalysis(
+          dateTime: dateTime, day: day, isGroupByDateTime: true);
+    }
+    return ResultBasic(data: result, success: true);
+  }
+
+  Future<ResultBasic<List<MoneyModel>>> getDetailAnalysis(
+      {required MoneyType moneyType,
+      required categoryId,
+      DateTime? dateTime,
+      int? day}) async {
+    List<MoneyModel> result = [];
+    if (dateTime != null && day != null) {
+      result = await repo.getAllPayAnalysis(
+          dateTime: dateTime, day: day, isGroupByDateTime: false);
+      result = result
+          .where((element) =>
+              element.moneyType == moneyType &&
+              element.category.id == categoryId)
+          .toList();
     }
     return ResultBasic(data: result, success: true);
   }

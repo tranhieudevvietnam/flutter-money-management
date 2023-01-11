@@ -11,3 +11,8 @@ class AnalysisInitEvent extends AnalysisEvent {
       : assert(
             dateTime != null && day != null || dateTime == null && day == null);
 }
+
+class AnalysisDetailEvent extends AnalysisEvent {
+  final MoneyModel data;
+  AnalysisDetailEvent(this.data);
+}

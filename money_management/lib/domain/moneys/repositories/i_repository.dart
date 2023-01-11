@@ -5,5 +5,5 @@ abstract class IMoneyRepository {
   Future<bool> updatePay({required MoneyModel value});
   Future<bool> deletePay({required MoneyModel value});
   Future<List<MoneyModel>> getAllPay({String? search});
-  Future<List<MoneyModel>> getAllPayAnalysis({required DateTime dateTime,required int day});
+  Future<List<MoneyModel>> getAllPayAnalysis({required DateTime dateTime,required int day, required bool isGroupByDateTime});
 }

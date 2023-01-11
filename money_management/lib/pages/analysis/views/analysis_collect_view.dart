@@ -7,14 +7,12 @@ class AnalysisCollectView extends StatelessWidget {
     ValueNotifier<int> indexNotifier = ValueNotifier(-1);
 
     return BlocBuilder<AnalysisBloc, AnalysisState>(
+      buildWhen: (previous, current) => current is AnalysisGetAllPaymentSuccess,
       builder: (context, state) {
         List<MoneyModel> listData = [];
-        List<MoneyModel> listDataView = [];
+        // List<MoneyModel> listDataView = [];
         if (state is AnalysisGetAllPaymentSuccess) {
           listData = state.listDataCollect;
-          listDataView = state.listDataCollect
-              .where((element) => element.moneyType == MoneyType.collect)
-              .toList();
         }
         return SingleChildScrollView(
           child: Column(
@@ -34,12 +32,16 @@ class AnalysisCollectView extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
-                      children: List.generate(listDataView.length, (index) {
+                      children: List.generate(listData.length, (index) {
                         return GestureDetector(
                           onTap: () {
                             NavigatorUtil.push(
                                 routeName: AnalysisDetailScreen.routeName,
-                                context: context);
+                                context: context,
+                                arguments: {
+                                  "moneyModel": listData[index],
+                                  "bloc": BlocProvider.of<AnalysisBloc>(context)
+                                });
                           },
                           child: Container(
                             padding: const EdgeInsets.all(10),
@@ -50,7 +52,7 @@ class AnalysisCollectView extends StatelessWidget {
                                 border: Border.all(
                                     width: value == index ? 2 : 1,
                                     color: value == index
-                                        ? listDataView[index].color!
+                                        ? listData[index].color!
                                         : ColorConst.border)),
                             child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,29 +61,27 @@ class AnalysisCollectView extends StatelessWidget {
                                       padding: const EdgeInsets.all(5),
                                       decoration: BoxDecoration(
                                           border: Border.all(
-                                              color:
-                                                  listDataView[index].color!),
+                                              color: listData[index].color!),
                                           borderRadius:
                                               BorderRadius.circular(100)),
                                       child: Icon(
-                                        getIconByKey(listDataView[index]
-                                            .category
-                                            .icon!),
-                                        color: listDataView[index].color!,
+                                        getIconByKey(
+                                            listData[index].category.icon!),
+                                        color: listData[index].color!,
                                       )),
                                   const SizedBox(
                                     width: 10,
                                   ),
                                   Expanded(
                                       child: Text(
-                                    "${listDataView[index].category.name}",
+                                    "${listData[index].category.name}",
                                     style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                         color: ColorConst.text),
                                   )),
                                   Text(
-                                    "+ ${FormatUtils.instant.moneyFormat(money: listDataView[index].money)}",
+                                    "+ ${FormatUtils.instant.moneyFormat(money: listData[index].money)}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: value == index ? 16 : 14,

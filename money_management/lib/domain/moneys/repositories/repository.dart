@@ -81,7 +81,9 @@ class MoneyRepository extends IMoneyRepository {
 
   @override
   Future<List<MoneyModel>> getAllPayAnalysis(
-      {required DateTime dateTime, required int day}) async {
+      {required DateTime dateTime,
+      required int day,
+      required bool isGroupByDateTime}) async {
     try {
       final listOld =
           HiveUtil.boxMoney.get(HiveKeyConstant.payMoney, defaultValue: []);
@@ -99,22 +101,19 @@ class MoneyRepository extends IMoneyRepository {
                       .inDays <=
                   0)
           .toList();
-      for (var item in listData2) {
-        final index = listData3
-            .indexWhere((element) => element.category.id == item.category.id
-                //  &&
-                // DateTime(element.createDated.year, element.createDated.month,
-                //             element.createDated.day)
-                //         .difference(DateTime(item.createDated.year,
-                //             item.createDated.month, item.createDated.day))
-                //         .inDays ==
-                //     0
-                );
-        if (index >= 0) {
-          listData3[index].money += item.money;
-        } else {
-          listData3.add(MoneyModel.copyWith(data: item));
+
+      if (isGroupByDateTime == true) {
+        for (var item in listData2) {
+          final index = listData3
+              .indexWhere((element) => element.category.id == item.category.id);
+          if (index >= 0) {
+            listData3[index].money += item.money;
+          } else {
+            listData3.add(MoneyModel.copyWith(data: item));
+          }
         }
+      } else {
+        listData3 = listData2;
       }
 
       return listData3;

@@ -8,6 +8,7 @@ class AnalysisPayView extends StatelessWidget {
     ValueNotifier<int> indexNotifier = ValueNotifier(-1);
 
     return BlocBuilder<AnalysisBloc, AnalysisState>(
+      buildWhen: (previous, current) => current is AnalysisGetAllPaymentSuccess,
       builder: (context, state) {
         List<MoneyModel> listData = [];
 
@@ -33,7 +34,11 @@ class AnalysisPayView extends StatelessWidget {
                         onTap: () {
                           NavigatorUtil.push(
                               routeName: AnalysisDetailScreen.routeName,
-                              context: context);
+                              context: context,
+                              arguments: {
+                                "moneyModel": listData[index],
+                                "bloc": BlocProvider.of<AnalysisBloc>(context)
+                              });
                         },
                         child: Container(
                           padding: const EdgeInsets.all(10),
@@ -47,7 +52,7 @@ class AnalysisPayView extends StatelessWidget {
                                       ? listData[index].color!
                                       : ColorConst.border)),
                           child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
                                     padding: const EdgeInsets.all(5),
@@ -75,14 +80,14 @@ class AnalysisPayView extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                           color: ColorConst.text),
                                     ),
-                                    Text(
-                                      "${listData[index].startDate?.dateTimeConvertString(type: "dd/MM/yyyy") ?? "N/A"} "
-                                      "- ${listData[index].createDated.dateTimeConvertString(type: "dd/MM/yyyy")}",
-                                      style: const TextStyle(
-                                          height: 1.5,
-                                          fontSize: 12,
-                                          color: ColorConst.text),
-                                    ),
+                                    // Text(
+                                    //   "${listData[index].startDate?.dateTimeConvertString(type: "dd/MM/yyyy") ?? "N/A"} "
+                                    //   "- ${listData[index].createDated.dateTimeConvertString(type: "dd/MM/yyyy")}",
+                                    //   style: const TextStyle(
+                                    //       height: 1.5,
+                                    //       fontSize: 12,
+                                    //       color: ColorConst.text),
+                                    // ),
                                   ],
                                 )),
                                 Text(

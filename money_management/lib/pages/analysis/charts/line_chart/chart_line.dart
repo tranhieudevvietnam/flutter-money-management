@@ -5,7 +5,7 @@ import 'package:intl/intl.dart' as intl;
 
 class ChartModel {
   final String time;
-  final num value;
+  num value;
   final Color color;
 
   ChartModel(
