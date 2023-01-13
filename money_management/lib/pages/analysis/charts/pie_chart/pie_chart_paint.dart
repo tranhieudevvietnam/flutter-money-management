@@ -44,6 +44,7 @@ class PieChartPaint extends CustomPainter {
     return true;
   }
 
+  //#region sự kiện click
   handleTouch(
     Offset localPosition,
   ) {
@@ -109,6 +110,9 @@ class PieChartPaint extends CustomPainter {
     // );
   }
 
+  //#endregion
+
+  //region drawTexts
   void drawTexts(
       BuildContext context, Canvas canvas, double centerRadius, Size viewSize) {
     final center = Offset(viewSize.width / 2, viewSize.height / 2);
@@ -143,16 +147,21 @@ class PieChartPaint extends CustomPainter {
           textAlign: TextAlign.center,
           textDirection: TextDirection.ltr,
         )..layout();
-
-        tp.paint(
-          canvas,
-          sectionCenterOffsetTitle - Offset(tp.width / 2, tp.height / 2),
-        );
+        final offsetTp =
+            sectionCenterOffsetTitle - Offset(tp.width / 2, tp.height / 2);
+        if (section.value >= 5) {
+          tp.paint(
+            canvas,
+            offsetTp,
+          );
+        }
       }
 
       tempAngle += sweepAngle;
     }
   }
+
+  //#endregion
 
   void drawSections(
     Canvas canvas,

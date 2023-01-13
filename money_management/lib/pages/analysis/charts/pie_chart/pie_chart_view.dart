@@ -83,7 +83,7 @@ class _PieChartViewState extends State<PieChartView> {
     return List.generate(widget.listData.length, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 20.0 : 14.0;
-      final radius = isTouched ? (height / 2.5) : (height / 2.5 - 20);
+      final radius = isTouched ? (height / 2.5) : (height / 3);
       return PieChartData(
         color: widget.listData[i].color!,
         value: widget.listData[i].percent!.toDouble(),
@@ -93,7 +93,7 @@ class _PieChartViewState extends State<PieChartView> {
         titleStyle: TextStyle(
           fontSize: fontSize,
           fontWeight: FontWeight.bold,
-          color: const Color(0xffffffff),
+          color: Colors.white,
         ),
       );
     });

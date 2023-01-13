@@ -7,9 +7,10 @@ class ChartModel {
   final String time;
   num value;
   final Color color;
+  final DateTime date;
 
   ChartModel(
-      {required this.time, required this.value, this.color = Colors.black});
+      {required this.time, required this.value, required this.date, this.color = Colors.black});
 }
 
 // ignore: must_be_immutable
@@ -17,7 +18,7 @@ class ChartsLine extends StatefulWidget {
   final List<List<ChartModel>> listData;
   Color color;
   Color colorSelect;
-  Function(int index)? onTap;
+  Function(int indexParent, int indexChild)? onTap;
 
   TextStyle? style;
   double? height;
@@ -38,28 +39,39 @@ class ChartsLine extends StatefulWidget {
 
 class _ChartsLineState extends State<ChartsLine> {
   Offset? position;
+  double paddingX = 10;
+  double paddingY = 16;
 
   @override
   Widget build(BuildContext context) {
     // print("posision: ${position}");
-    return Center(
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: paddingY, horizontal: paddingX),
       child: SizedBox(
-        height: 300,
+        height: widget.height,
         width: MediaQuery.of(context).size.width,
         child: Listener(
           onPointerMove: (event) {
+            RenderBox? renderBox = context.findRenderObject() as RenderBox;
+            final aaa = Offset(
+                event.position.dx - paddingX, event.position.dy - paddingY);
+            final positionTemp = renderBox.globalToLocal(aaa);
             setState(() {
-              position = event.position;
+              position = Offset(positionTemp.dx, positionTemp.dy);
             });
           },
           onPointerDown: (event) {
-            // print("posision: ${event.position}");
+            RenderBox? renderBox = context.findRenderObject() as RenderBox;
+            final aaa = Offset(
+                event.position.dx - paddingX, event.position.dy - paddingY);
+            final positionTemp = renderBox.globalToLocal(aaa);
             setState(() {
-              position = event.position;
+              position = Offset(positionTemp.dx, positionTemp.dy);
             });
           },
           child: CustomPaint(
-            size: Size(MediaQuery.of(context).size.width, widget.height ?? 300),
+            size: Size(MediaQuery.of(context).size.width - 32,
+                (widget.height ?? 300) - 32),
             painter: MyCustomPaint(
                 listData: widget.listData,
                 color: widget.color,
@@ -80,7 +92,7 @@ class MyCustomPaint extends CustomPainter {
   double? height;
   Offset? position;
   Color colorSelect;
-  Function(int index)? onTap;
+  Function(int indexParent, int indexChild)? onTap;
 
   MyCustomPaint(
       {required this.listData,
@@ -131,7 +143,8 @@ class MyCustomPaint extends CustomPainter {
       valueNext: widthNext,
     );
 
-    for (var item in listData) {
+    for (int i = 0; i < listData.length; i++) {
+      final item = listData[i];
       //Lấy list toạ độ dùng cho việc chấm điểm và vẽ line
       List<Offset> listOffset = _getListOffsetByListData(
           listData: item,
@@ -160,7 +173,7 @@ class MyCustomPaint extends CustomPainter {
             (position!.dx >= (listOffset[iii].dx - widthNext / 2) &&
                 position!.dx <= (listOffset[iii].dx + widthNext / 2)) &&
             onTap != null) {
-          onTap?.call(iii);
+          onTap?.call(i, iii);
           canvas.drawLine(
               Offset(listOffset[iii].dx, 0),
               Offset(listOffset[iii].dx, size.height - paddingY * 2),

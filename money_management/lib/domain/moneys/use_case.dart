@@ -64,4 +64,16 @@ class MoneyUseCase {
     }
     return ResultBasic(data: result, success: true);
   }
+  
+
+
+  Future<ResultBasic<List<MoneyModel>>> getAllPayByOneDateTime(
+      {DateTime? dateTime}) async {
+    List<MoneyModel> result = [];
+    if (dateTime != null ) {
+      result = await repo.getAllPayAnalysis(
+          dateTime: dateTime,day: 0, isGroupByDateTime: true);
+    }
+    return ResultBasic(data: result, success: true);
+  }
 }

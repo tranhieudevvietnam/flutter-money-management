@@ -92,15 +92,17 @@ class MoneyRepository extends IMoneyRepository {
 
       final startDate = dateTime.add(Duration(days: -day));
       final endDate = DateTime(dateTime.year, dateTime.month, dateTime.day);
-      final listData2 = listData
-          .where((element) =>
-              element.createDated.difference(startDate).inDays > 0 &&
-              DateTime(element.createDated.year, element.createDated.month,
-                          element.createDated.day)
-                      .difference(endDate)
-                      .inDays <=
-                  0)
-          .toList();
+      final listData2 = listData.where((element) {
+        if (element.createDated.difference(startDate).inDays >= 0 &&
+            DateTime(element.createDated.year, element.createDated.month,
+                        element.createDated.day)
+                    .difference(endDate)
+                    .inDays <=
+                0) {
+          return true;
+        }
+        return false;
+      }).toList();
 
       if (isGroupByDateTime == true) {
         for (var item in listData2) {

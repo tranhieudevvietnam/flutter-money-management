@@ -4,3 +4,10 @@ part of 'calendar_bloc.dart';
 abstract class CalendarEvent {}
 
 class CalendarInitEvent extends CalendarEvent {}
+
+
+class CalendarGetAllByDateEvent extends CalendarEvent{
+  final DateTime dateTime;
+
+  CalendarGetAllByDateEvent(this.dateTime);
+}

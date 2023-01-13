@@ -42,42 +42,44 @@ class _InputScreenState extends State<InputScreen>
           children: [
             Container(
               // height: 45,
-              padding: const EdgeInsets.only(top: 16, bottom: 16),
+              padding: const EdgeInsets.only(
+                top: 5,
+              ),
               decoration: const BoxDecoration(
                 color: ColorConst.primary,
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30)),
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25)),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ValueListenableBuilder(
-                  valueListenable: tabCurrentIndex,
-                  builder: (context, value, child) {
-                    return TabBar(
-                      controller: _tabController,
-                      // give the indicator a decoration (color and border radius)
-                      indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          25.0,
-                        ),
-                        color: Colors.white,
+              child: ValueListenableBuilder(
+                valueListenable: tabCurrentIndex,
+                builder: (context, value, child) {
+                  return TabBar(
+                    controller: _tabController,
+                    // give the indicator a decoration (color and border radius)
+                    indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        25.0,
                       ),
-                      labelColor: ColorConst.primary,
-                      labelStyle: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                      unselectedLabelColor: Colors.white,
-                      tabs: [
-                        Tab(
-                          text: AppLocalizations.of(context)!.spending,
-                        ),
-                        Tab(
-                          text: AppLocalizations.of(context)!.income,
-                        ),
-                      ],
-                    );
-                  },
-                ),
+                      color: Colors.white,
+                    ),
+                    padding: const EdgeInsets.all(5),
+                    labelColor: ColorConst.primary,
+                    labelStyle: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold),
+                    unselectedLabelColor: Colors.white,
+                    tabs: [
+                      Tab(
+                        height: 40,
+                        text: AppLocalizations.of(context)!.spending,
+                      ),
+                      Tab(
+                        height: 40,
+                        text: AppLocalizations.of(context)!.income,
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
             Expanded(

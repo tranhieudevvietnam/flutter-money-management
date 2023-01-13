@@ -7,6 +7,7 @@ import 'package:money_management/domain/moneys/entities/money_model.dart';
 import 'package:money_management/domain/moneys/entities/money_type.dart';
 import 'package:money_management/domain/moneys/repositories/repository.dart';
 import 'package:money_management/domain/moneys/use_case.dart';
+import 'package:money_management/utils/datetime_utils.dart';
 
 import '../charts/line_chart/chart_line.dart';
 
@@ -17,6 +18,7 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
   AnalysisBloc() : super(AnalysisInitial()) {
     on<AnalysisInitEvent>(_onAnalysisInitEvent);
     on<AnalysisDetailEvent>(_onAnalysisDetailEvent);
+    on<AnalysisDetailByMonthEvent>(_onAnalysisDetailByMonthEvent);
   }
 
   MoneyUseCase useCase = MoneyUseCase(MoneyRepository());
@@ -87,24 +89,37 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
   FutureOr<void> _onAnalysisDetailEvent(
       AnalysisDetailEvent event, Emitter<AnalysisState> emit) async {
     List<ChartModel> listCharts = [];
+    final dateTemp = DateTime.now();
+    DateTime dateTimeKnow =
+        DateTime(dateTemp.year, dateTemp.month, dateTemp.daysInMonth);
 
     for (int i = 1; i <= 12; i++) {
-      listCharts
-          .add(ChartModel(time: "T$i", value: 0, color: Colors.green.shade300));
+      listCharts.insert(
+          0,
+          ChartModel(
+              time: "T${dateTimeKnow.month}",
+              date: dateTimeKnow,
+              value: 0,
+              color: event.data.moneyType == MoneyType.collect
+                  ? ColorConst.success
+                  : ColorConst.error));
+      final days = dateTimeKnow.daysInMonth;
+
+      dateTimeKnow = dateTimeKnow.add(Duration(days: -days));
     }
 
     final result = await useCase.getDetailAnalysis(
         categoryId: event.data.category.id,
         moneyType: event.data.moneyType!,
-        dateTime: dateTimeCurrent,
-        day: dayCurrent);
+        dateTime: dateTemp,
+        day: dateTemp.daysInMonth);
     if (result.success == true) {
       for (MoneyModel item in result.data) {
         int index = listCharts.indexWhere(
             (element) => element.time == "T${item.createDated.month}");
         listCharts[index].value += item.money;
       }
-
+      result.data.sort(((a, b) => b.createDated.compareTo(a.createDated)));
       emit(AnalysisDetailState(
           success: true, listCharts: listCharts, listData: result.data));
     } else {
@@ -116,5 +131,22 @@ class AnalysisBloc extends Bloc<AnalysisEvent, AnalysisState> {
     }
   }
 
+  FutureOr<void> _onAnalysisDetailByMonthEvent(
+      AnalysisDetailByMonthEvent event, Emitter<AnalysisState> emit) async {
+    final result = await useCase.getDetailAnalysis(
+        categoryId: event.data.category.id,
+        moneyType: event.data.moneyType!,
+        dateTime:
+            DateTime(event.date.year, event.date.month, event.date.daysInMonth),
+        day: event.date.daysInMonth);
+    if (result.success == true) {
+      result.data.sort(((a, b) => b.createDated.compareTo(a.createDated)));
+      emit(AnalysisDetailByMonthState(success: true, listData: result.data));
+    } else {
+      emit(AnalysisDetailByMonthState(
+          success: false, message: "Error", listData: const []));
+    }
+  }
   //#endregion
+
 }

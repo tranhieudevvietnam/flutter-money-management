@@ -16,3 +16,10 @@ class AnalysisDetailEvent extends AnalysisEvent {
   final MoneyModel data;
   AnalysisDetailEvent(this.data);
 }
+
+class AnalysisDetailByMonthEvent extends AnalysisEvent {
+  final DateTime date;
+  final MoneyModel data;
+
+  AnalysisDetailByMonthEvent({required this.date,required this.data});
+}

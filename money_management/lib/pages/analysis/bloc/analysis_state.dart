@@ -38,3 +38,15 @@ class AnalysisDetailState extends AnalysisState {
       : assert((success == false && message?.isNotEmpty == true) ||
             success == true);
 }
+class AnalysisDetailByMonthState extends AnalysisState {
+  final bool success;
+  final String? message;
+  final List<MoneyModel> listData;
+
+  AnalysisDetailByMonthState(
+      {required this.success,
+      this.message,
+      required this.listData,})
+      : assert((success == false && message?.isNotEmpty == true) ||
+            success == true);
+}
