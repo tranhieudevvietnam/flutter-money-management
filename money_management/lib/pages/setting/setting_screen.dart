@@ -76,9 +76,11 @@ class _SettingScreenState extends State<SettingScreen> {
             routeName: LanguageScreen.routeName, context: context);
         break;
       case 2:
-        customToastUtils(context,
-            type: ToastType.fail,
-            msg: AppLocalizations.of(context)!.functionsInDevelopment);
+        // customToastUtils(context,
+        //     type: ToastType.fail,
+        //     msg: AppLocalizations.of(context)!.functionsInDevelopment);
+        NavigatorUtil.push(
+            routeName: DataScreen.routeName, context: context);
         break;
       default:
     }

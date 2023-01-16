@@ -74,6 +74,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       // final map = settings.arguments as Map;
       return MaterialPageRoute(
           builder: (context) => const LanguageScreen(), settings: settings);
+    case DataScreen.routeName:
+      // final map = settings.arguments as Map;
+      return MaterialPageRoute(
+          builder: (context) => const DataScreen(), settings: settings);
 
     default:
       return MaterialPageRoute(

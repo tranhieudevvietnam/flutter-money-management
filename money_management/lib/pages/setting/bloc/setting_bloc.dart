@@ -11,11 +11,32 @@ part 'setting_state.dart';
 class SettingBloc extends Bloc<SettingEvent, SettingState> {
   SettingBloc() : super(SettingInitial()) {
     on<SettingChangeLanguageEvent>(_onSettingChangeLanguageEvent);
+    on<SettingDeleteDataEvent>(_onSettingDeleteDataEvent);
   }
 
   FutureOr<void> _onSettingChangeLanguageEvent(
       SettingChangeLanguageEvent event, Emitter<SettingState> emit) {
     HiveUtil.boxLocal.put(HiveKeyConstant.language, event.locale.languageCode);
     emit(SettingChangeLanguage(event.locale));
+  }
+
+  FutureOr<void> _onSettingDeleteDataEvent(
+      SettingDeleteDataEvent event, Emitter<SettingState> emit) async {
+    try {
+      switch (event.typeDelete) {
+        case TypeSettingDelete.dataMoney:
+          await HiveUtil.boxMoney.put(HiveKeyConstant.payMoney, []);
+          emit(SettingDeleteDataState(success: true));
+          break;
+        case TypeSettingDelete.dataCategory:
+          await HiveUtil.boxMoney.put(HiveKeyConstant.categories, []);
+          emit(SettingDeleteDataState(success: true));
+          break;
+        default:
+          break;
+      }
+    } catch (e) {
+      emit(SettingDeleteDataState(success: false, message: e.toString()));
+    }
   }
 }

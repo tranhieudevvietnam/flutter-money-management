@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:money_management/constants/color_constant.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ToastType { success, fail }
 
@@ -82,6 +83,46 @@ Future<void> showMyDiaLog(
             child: const Text('Đóng'),
             onPressed: () {
               Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future<void> showMyDiaLogConfirm(
+    {required BuildContext context,
+    required String title,
+    required String message,
+    required Function onAccept,
+    required Function onClose}) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(title),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(message),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(AppLocalizations.of(context)!.close),
+            onPressed: () {
+              Navigator.of(context).pop(false);
+              onClose.call();
+            },
+          ),
+          TextButton(
+            child: Text(AppLocalizations.of(context)!.continueText),
+            onPressed: () {
+              Navigator.of(context).pop(true);
+              onAccept.call();
             },
           ),
         ],

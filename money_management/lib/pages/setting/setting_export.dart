@@ -10,3 +10,4 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part './setting_screen.dart';
 part './screens/language_screen.dart';
+part './screens/data_screen.dart';

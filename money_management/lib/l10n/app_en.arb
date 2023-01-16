@@ -1,5 +1,6 @@
 {
   "helloWorld": "Hello World!",
+  "update": "Update",
   "success": "Success",
   "failure": "Failure",
   "error": "Error",
@@ -8,6 +9,10 @@
   "spending": "Spending",
   "time": "Time",
   "continueText": "Continue",
+  "dataCurrent": "Data current",
+  "dataMoney": "Data money",
+  "dataCategory": "Data category",
+  "textWarningDelete": "Are you sure you want to delete",
   "income": "Income",
   "input": "Input",
   "analysis": "Analysis",
