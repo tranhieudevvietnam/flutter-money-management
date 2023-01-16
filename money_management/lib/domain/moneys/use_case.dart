@@ -64,16 +64,24 @@ class MoneyUseCase {
     }
     return ResultBasic(data: result, success: true);
   }
-  
-
 
   Future<ResultBasic<List<MoneyModel>>> getAllPayByOneDateTime(
       {DateTime? dateTime}) async {
     List<MoneyModel> result = [];
-    if (dateTime != null ) {
+    if (dateTime != null) {
       result = await repo.getAllPayAnalysis(
-          dateTime: dateTime,day: 0, isGroupByDateTime: true);
+          dateTime: dateTime, day: 0, isGroupByDateTime: true);
     }
     return ResultBasic(data: result, success: true);
+  }
+
+  Future<ResultBasic<int>> countDataLocal() async {
+    int count = 0;
+    final result = await repo.getAllPay();
+    if (result.isNotEmpty == true) {
+      count = result.length;
+      return ResultBasic(data: count, success: true);
+    }
+    return ResultBasic(data: count, success: false, message: "error");
   }
 }

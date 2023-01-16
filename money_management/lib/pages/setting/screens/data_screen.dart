@@ -14,6 +14,7 @@ class _DataScreenState extends State<DataScreen> {
   @override
   void initState() {
     bloc = BlocProvider.of<SettingBloc>(context);
+    bloc.add(SettingCountDataEvent());
     super.initState();
   }
 
@@ -42,39 +43,52 @@ class _DataScreenState extends State<DataScreen> {
               }
             }
           },
-          child: Column(
-            children: [
-              ItemDataSettingWidget(
-                  callback: () {
-                    showMyDiaLogConfirm(
-                        context: context,
-                        title: AppLocalizations.of(context)!.warning,
-                        message:
-                            "${AppLocalizations.of(context)!.textWarningDelete} ${AppLocalizations.of(context)!.dataCategory.toLowerCase()}? ",
-                        onAccept: () {
-                          bloc.add(SettingDeleteDataEvent(
-                              typeDelete: TypeSettingDelete.dataCategory));
+          child: BlocBuilder<SettingBloc, SettingState>(
+            buildWhen: (previous, current) =>
+                current is SettingCountDataLocalState,
+            builder: (context, state) {
+              if (state is SettingCountDataLocalState) {
+                return Column(
+                  children: [
+                    ItemDataSettingWidget(
+                        callback: () {
+                          showMyDiaLogConfirm(
+                              context: context,
+                              title: AppLocalizations.of(context)!.warning,
+                              message:
+                                  "${AppLocalizations.of(context)!.textWarningDelete} ${AppLocalizations.of(context)!.dataCategory.toLowerCase()}? ",
+                              onAccept: () {
+                                bloc.add(SettingDeleteDataEvent(
+                                    typeDelete:
+                                        TypeSettingDelete.dataCategory));
+                              },
+                              onClose: () {});
                         },
-                        onClose: () {});
-                  },
-                  imagePath: "assets/languages/icon_vietnam.png",
-                  title: AppLocalizations.of(context)!.dataCategory),
-              ItemDataSettingWidget(
-                  callback: () => {
-                        showMyDiaLogConfirm(
-                            context: context,
-                            title: AppLocalizations.of(context)!.warning,
-                            message:
-                                "${AppLocalizations.of(context)!.textWarningDelete} ${AppLocalizations.of(context)!.dataCategory.toLowerCase()}? ",
-                            onAccept: () {
-                              bloc.add(SettingDeleteDataEvent(
-                                  typeDelete: TypeSettingDelete.dataMoney));
+                        imagePath: "assets/languages/icon_vietnam.png",
+                        count: state.countRowCategory,
+                        title: AppLocalizations.of(context)!.dataCategory),
+                    ItemDataSettingWidget(
+                        callback: () => {
+                              showMyDiaLogConfirm(
+                                  context: context,
+                                  title: AppLocalizations.of(context)!.warning,
+                                  message:
+                                      "${AppLocalizations.of(context)!.textWarningDelete} ${AppLocalizations.of(context)!.dataCategory.toLowerCase()}? ",
+                                  onAccept: () {
+                                    bloc.add(SettingDeleteDataEvent(
+                                        typeDelete:
+                                            TypeSettingDelete.dataMoney));
+                                  },
+                                  onClose: () {})
                             },
-                            onClose: () {})
-                      },
-                  imagePath: "assets/languages/icon_english.png",
-                  title: AppLocalizations.of(context)!.dataMoney),
-            ],
+                        imagePath: "assets/languages/icon_english.png",
+                        count: state.countRowMoney,
+                        title: AppLocalizations.of(context)!.dataMoney),
+                  ],
+                );
+              }
+              return const LoadingWidget();
+            },
           ),
         ),
       )),
@@ -85,11 +99,13 @@ class _DataScreenState extends State<DataScreen> {
 class ItemDataSettingWidget extends StatelessWidget {
   final String title;
   final String imagePath;
+  final int count;
   final VoidCallback callback;
   const ItemDataSettingWidget(
       {Key? key,
       required this.title,
       required this.imagePath,
+      required this.count,
       required this.callback})
       : super(key: key);
 
@@ -103,23 +119,33 @@ class ItemDataSettingWidget extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border.all(color: ColorConst.border),
             borderRadius: BorderRadius.circular(10)),
-        child: Row(children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(100),
-            child: const Icon(
-              Icons.snippet_folder_outlined,
-              size: 30,
-              color: ColorConst.primary,
+        child: Row(
+          children: [
+            Expanded(
+              child: Row(children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: const Icon(
+                    Icons.snippet_folder_outlined,
+                    size: 30,
+                    color: ColorConst.primary,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  title,
+                  style: const TextStyle(fontSize: 16, color: ColorConst.text),
+                )
+              ]),
             ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(
-            title,
-            style: const TextStyle(fontSize: 16, color: ColorConst.text),
-          )
-        ]),
+            Text(
+              count.toString(),
+              style: const TextStyle(fontSize: 16, color: ColorConst.hintText),
+            )
+          ],
+        ),
       ),
     );
   }

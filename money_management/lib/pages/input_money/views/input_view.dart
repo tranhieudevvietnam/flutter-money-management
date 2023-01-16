@@ -123,6 +123,7 @@ class _InputViewState extends State<InputView> {
                   border: Border.all(color: ColorConst.border)),
               child: Column(
                 children: [
+                  //#region input category
                   GestureDetector(
                     onTap: () async {
                       final result = await NavigatorUtil.push(
@@ -184,7 +185,10 @@ class _InputViewState extends State<InputView> {
                       ],
                     ),
                   ),
+                  //#endregion
                   const Divider(),
+
+                  //#region note
                   Row(
                     children: [
                       const Icon(
@@ -206,81 +210,136 @@ class _InputViewState extends State<InputView> {
                       )),
                     ],
                   ),
+                  //#endregion
                   const Divider(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.calendar_month_outlined,
-                        size: 30,
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: ValueListenableBuilder(
+
+                  //#region date time picker
+
+                  DropUIWidget(
+                    childBody: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.calendar_month_outlined,
+                          size: 30,
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: ValueListenableBuilder(
+                            valueListenable: dateTimeNotifier,
+                            builder: (context, value, child) {
+                              return GestureDetector(
+                                onTap: () async {
+                                  final dateResult = await DateTimeUtils.instant
+                                      .datePicker(context,
+                                          dateTimeCurrent:
+                                              dateTimeNotifier.value);
+                                  if (dateResult != null) {
+                                    dateTimeNotifier.value = dateResult;
+                                  }
+                                },
+                                child: Text(
+                                  "${value.dateTimeConvertString(type: "dd/MM/yyyy")}",
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        ValueListenableBuilder(
                           valueListenable: dateTimeNotifier,
                           builder: (context, value, child) {
                             return GestureDetector(
                               onTap: () async {
-                                final dateResult = await DateTimeUtils.instant
-                                    .datePicker(context,
-                                        dateTimeCurrent:
-                                            dateTimeNotifier.value);
-                                if (dateResult != null) {
-                                  dateTimeNotifier.value = dateResult;
+                                final timeResult = await DateTimeUtils.instant
+                                    .timePicker(context,
+                                        timeCurrent: TimeOfDay(
+                                            hour: dateTimeNotifier.value.hour,
+                                            minute:
+                                                dateTimeNotifier.value.minute));
+                                if (timeResult != null) {
+                                  dateTimeNotifier.value = DateTime(
+                                      value.year,
+                                      value.month,
+                                      value.day,
+                                      timeResult.hour,
+                                      timeResult.minute);
                                 }
-                                // showMaterialDatePicker(
-                                //   context: context,
-                                //   selectedDate: dateTimeNotifier.value,
-                                //   title: "Select date",
-                                //   onChanged: (value) {
-                                //     dateTimeNotifier.value = value;
-                                //   },
-                                //   firstDate:
-                                //       DateTime.now().add(Duration(days: -365)),
-                                //   lastDate:
-                                //       DateTime.now().add(Duration(days: 365)),
-                                // );
                               },
                               child: Text(
-                                // "${FormatUtils.instant.dateTimeConvertString(date: value, type: "dd/MM/yyyy")}",
-                                "${value.dateTimeConvertString(type: "dd/MM/yyyy")}",
+                                "${value.dateTimeConvertString(type: "HH:mm")}",
                                 style: const TextStyle(fontSize: 14),
                               ),
                             );
                           },
                         ),
-                      ),
-                      ValueListenableBuilder(
-                        valueListenable: dateTimeNotifier,
-                        builder: (context, value, child) {
-                          return GestureDetector(
-                            onTap: () async {
-                              final timeResult = await DateTimeUtils.instant
-                                  .timePicker(context,
-                                      timeCurrent: TimeOfDay(
-                                          hour: dateTimeNotifier.value.hour,
-                                          minute:
-                                              dateTimeNotifier.value.minute));
-                              if (timeResult != null) {
-                                dateTimeNotifier.value = DateTime(
-                                    value.year,
-                                    value.month,
-                                    value.day,
-                                    timeResult.hour,
-                                    timeResult.minute);
-                              }
+                      ],
+                    ),
+                    childTitle: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.calendar_month_outlined,
+                          size: 30,
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: ValueListenableBuilder(
+                            valueListenable: dateTimeNotifier,
+                            builder: (context, value, child) {
+                              return GestureDetector(
+                                onTap: () async {
+                                  final dateResult = await DateTimeUtils.instant
+                                      .datePicker(context,
+                                          dateTimeCurrent:
+                                              dateTimeNotifier.value);
+                                  if (dateResult != null) {
+                                    dateTimeNotifier.value = dateResult;
+                                  }
+                                },
+                                child: Text(
+                                  "${value.dateTimeConvertString(type: "dd/MM/yyyy")}",
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              );
                             },
-                            child: Text(
-                              "${value.dateTimeConvertString(type: "HH:mm")}",
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                          ),
+                        ),
+                        ValueListenableBuilder(
+                          valueListenable: dateTimeNotifier,
+                          builder: (context, value, child) {
+                            return GestureDetector(
+                              onTap: () async {
+                                final timeResult = await DateTimeUtils.instant
+                                    .timePicker(context,
+                                        timeCurrent: TimeOfDay(
+                                            hour: dateTimeNotifier.value.hour,
+                                            minute:
+                                                dateTimeNotifier.value.minute));
+                                if (timeResult != null) {
+                                  dateTimeNotifier.value = DateTime(
+                                      value.year,
+                                      value.month,
+                                      value.day,
+                                      timeResult.hour,
+                                      timeResult.minute);
+                                }
+                              },
+                              child: Text(
+                                "${value.dateTimeConvertString(type: "HH:mm")}",
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
+                  //#endregion
                 ],
               )),
           const SizedBox(

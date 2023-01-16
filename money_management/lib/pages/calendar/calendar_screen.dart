@@ -161,6 +161,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                               child: _buildEventsMarker(date, events),
                             );
                           }
+                          return null;
                         },
                       ),
                     );

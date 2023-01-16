@@ -7,6 +7,7 @@ import 'package:money_management/utils/custom_toast_utils.dart';
 import 'package:money_management/utils/navigator_utils.dart';
 import 'package:money_management/widgets/appbar/base_appbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:money_management/widgets/loading_widget.dart';
 
 part './setting_screen.dart';
 part './screens/language_screen.dart';

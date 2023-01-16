@@ -56,4 +56,17 @@ class CategoryUseCase {
     }
     return ResultBasic(data: null, success: false);
   }
+
+  Future<ResultBasic<int>> countDataLocal({String? search}) async {
+    int count = 0;
+    final result = await repo.getAll(search: search);
+    if (result.isNotEmpty == true) {
+      count = result.length;
+      return ResultBasic(
+        data: count,
+        success: true,
+      );
+    }
+    return ResultBasic(data: count, success: false);
+  }
 }

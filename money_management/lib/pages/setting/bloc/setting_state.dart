@@ -5,6 +5,13 @@ abstract class SettingState {}
 
 class SettingInitial extends SettingState {}
 
+class SettingCountDataLocalState extends SettingState {
+  final int countRowMoney;
+  final int countRowCategory;
+
+  SettingCountDataLocalState(this.countRowMoney, this.countRowCategory);
+}
+
 class SettingChangeLanguage extends SettingState {
   final Locale locale;
 

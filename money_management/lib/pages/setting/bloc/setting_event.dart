@@ -3,6 +3,11 @@ part of 'setting_bloc.dart';
 @immutable
 abstract class SettingEvent {}
 
+
+class SettingCountDataEvent extends SettingEvent{
+
+}
+
 class SettingChangeLanguageEvent extends SettingEvent {
   final Locale locale;
 
